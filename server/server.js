@@ -4,6 +4,7 @@ const express = require('express'),
     massive = require('massive');
 
 //controllers
+const authCtrl = require('./controllers/auth');
 
 const app = express(),
     {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env;
@@ -25,3 +26,24 @@ massive(CONNECTION_STRING).then(db => {
 });
 
 //endpoints
+app.get(`/api/patient`, authCtrl.getPatient)
+
+app.post(`/auth/register`, authCtrl.register);
+app.post(`/auth/login`, authCtrl.login);
+app.post(`/auth/logout`, authCtrl.logout);
+
+// app.post('/api/diagnosis', healthCtrl.getDiagnsis) [make own endpoint for FE]
+
+// (req, res) => { 
+//     let { gender, age, symptoms } = req.body 
+//     let body = { 
+//         sex: gender, 
+//         age, 
+//         symptoms: symptoms.map(symptom => { id: symptom.id, choice_id: 'present'})
+//     }
+
+//     axios.post('https://api.infermedica.com/v2/symptoms', body).then(response => { [make axios in BE to get info for FE]
+//         res.send(response)
+//     })
+// }
+

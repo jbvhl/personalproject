@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import './App.css';
-import Header from './components/Header'
-import Register from './components/Register';
+import React, { Component } from "react";
+import "./App.css";
+import routes from "./routes";
+import Nav from "./components/Nav/Nav";
+import { withRouter } from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
-        <Register/>
+        <Nav history={this.props.history} />
+        {routes}
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
