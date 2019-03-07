@@ -20,7 +20,9 @@ class Symptoms extends Component {
     });
   }
 
-  //diagnose = async () => {};
+  // diagnose = async () => {
+
+  // };
 
   render() {
     const { symptom1, symptom2, symptom3, symptom4, symptom5 } = this.state;
@@ -38,28 +40,28 @@ class Symptoms extends Component {
           placeholder="Enter Symptom 2 Here"
           type="text"
           value={symptom2}
-          onChange={e => this.handleChange("", e.target.value)}
+          onChange={e => this.handleChange("symptom2", e.target.value)}
         />
 
         <input
           placeholder="Enter Symptom 3 Here"
           type="text"
           value={symptom3}
-          onChange={e => this.handleChange("", e.target.value)}
+          onChange={e => this.handleChange("symptom3", e.target.value)}
         />
 
         <input
           placeholder="Enter Symptom 4 Here"
           type="text"
           value={symptom4}
-          onChange={e => this.handleChange("", e.target.value)}
+          onChange={e => this.handleChange("symptom4", e.target.value)}
         />
 
         <input
           placeholder="Enter Symptom 5 Here"
           type="text"
           value={symptom5}
-          onChange={e => this.handleChange("", e.target.value)}
+          onChange={e => this.handleChange("symptom5", e.target.value)}
         />
 
         <button onClick={this.diagnose}>Diagnose Me!</button>
