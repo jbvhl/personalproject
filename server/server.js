@@ -4,11 +4,11 @@ const express = require('express'),
     massive = require('massive');
 
 //controllers
-const authCtrl = require('./controllers/auth');
-    // medCtrl = require('./controllers/med');
+const authCtrl = require('./controllers/auth'),
+    medCtrl = require('./controllers/med');
 
 const app = express(),
-    {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env;
+    {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, API_ID, API_KEYS} = process.env;
 
 app.use(express.json());
 app.use(session({
@@ -33,7 +33,5 @@ app.post(`/auth/register`, authCtrl.register);
 app.post(`/auth/login`, authCtrl.login);
 app.post(`/auth/logout`, authCtrl.logout);
 
-
-
-// app.post('/api/diagnosis', medCtrl.getDiagnsis); //[make own endpoint for FE]
+app.post('/api/diagnosis', medCtrl.getDiagnsis); //[make own endpoint for FE]
 

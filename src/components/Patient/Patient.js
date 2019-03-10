@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { updatePatient, clearPatient } from "../../ducks/reducer";
+import { updatePatient, clearPatient } from "../../ducks/authReducer";
 import "./patient.css";
 import Symptoms from "../Symptoms/Symptoms";
 
@@ -36,7 +36,7 @@ class Patient extends Component {
     return (
       <div>
         <h1>
-          How are you feeling today, {firstName} {lastName}?
+          What kind of symptoms are you feeling today, {firstName} {lastName}?
         </h1>
         <Symptoms />
       </div>

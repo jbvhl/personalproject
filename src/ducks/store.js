@@ -1,4 +1,4 @@
-import {createStore} from 'redux';
-import reducer from './reducer';
+import {createStore, combineReducers} from 'redux';
+import authReducer from './authReducer';
 
-export default createStore(reducer);
+export default createStore(authReducer);

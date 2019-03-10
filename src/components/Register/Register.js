@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { updatePatient } from "../../ducks/reducer";
+import { updatePatient } from "../../ducks/authReducer";
 import { connect } from "react-redux";
 import "./register.css";
 
