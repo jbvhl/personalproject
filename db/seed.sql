@@ -9,3 +9,12 @@ create table patient (
     email varchar,
     password varchar
 )
+
+create table symptom (
+    id serial primary key,
+    location varchar,
+    severity varchar,
+    start varchar,
+    occurance varchar,
+    symptom varchar
+)
