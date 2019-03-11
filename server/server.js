@@ -4,8 +4,7 @@ const express = require('express'),
     massive = require('massive');
 
 //controllers
-const authCtrl = require('./controllers/auth'),
-    medCtrl = require('./controllers/med');
+const authCtrl = require('./controllers/auth');
 
 const app = express(),
     {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, API_ID, API_KEYS} = process.env;
@@ -33,5 +32,4 @@ app.post(`/auth/register`, authCtrl.register);
 app.post(`/auth/login`, authCtrl.login);
 app.post(`/auth/logout`, authCtrl.logout);
 
-app.post('/api/diagnosis', medCtrl.getDiagnsis); //[make own endpoint for FE]
 

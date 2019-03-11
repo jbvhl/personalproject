@@ -7,7 +7,6 @@ class Symptoms extends Component {
     super(props);
 
     this.state = {
-      symptoms: []
     };
   }
 
@@ -29,45 +28,22 @@ class Symptoms extends Component {
   };
 
   render() {
-    const { symptom1, symptom2, symptom3, symptom4, symptom5 } = this.state;
     return (
       <div>
         <h2>Symptoms</h2>
-        <p>For accuracy purposes, please enter at least 5 symptoms you are experiencing.</p>
-        <input
-          placeholder="Enter Symptom 1 Here"
-          type="text"
-          value={symptom1}
-          onChange={e => this.handleChange("symptom1", e.target.value)}
-        />
+        
+        <select>
+          <option value='location'>Where does it hurt?</option>
+          <option value='location'>Head</option>
+          <option value='location'>Chest</option>
+          <option value='location'>Arms</option>
+          <option value='location'>Legs</option>
+          <option value='location'>Stomach</option>
+          <option value='location'>Spine</option>
+          <option value='location'>Back</option>
+        </select>
 
-        <input
-          placeholder="Enter Symptom 2 Here"
-          type="text"
-          value={symptom2}
-          onChange={e => this.handleChange("symptom2", e.target.value)}
-        />
-
-        <input
-          placeholder="Enter Symptom 3 Here"
-          type="text"
-          value={symptom3}
-          onChange={e => this.handleChange("symptom3", e.target.value)}
-        />
-
-        <input
-          placeholder="Enter Symptom 4 Here"
-          type="text"
-          value={symptom4}
-          onChange={e => this.handleChange("symptom4", e.target.value)}
-        />
-
-        <input
-          placeholder="Enter Symptom 5 Here"
-          type="text"
-          value={symptom5}
-          onChange={e => this.handleChange("symptom5", e.target.value)}
-        />
+        
 
         <button onClick={this.diagnose}>Diagnose Me!</button>
       </div>

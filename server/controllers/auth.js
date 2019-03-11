@@ -11,7 +11,7 @@ module.exports = {
   },
 
   register: async (req, res) => {
-    const { firstName, lastName, email, password } = req.body,
+    const { firstName, lastName, gender, age, height, weight, email, password } = req.body,
       { session } = req,
       db = req.app.get("db");
     let takenEmail = await db.auth.checkEmail({ email });
@@ -26,6 +26,10 @@ module.exports = {
       patient = await db.auth.register({
         first_name: firstName,
         last_name: lastName,
+        gender,
+        age,
+        height,
+        weight,
         email,
         password: hash
       });

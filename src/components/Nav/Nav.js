@@ -10,8 +10,10 @@ class Nav extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      password: ""
+      // email: this.props.email,
+      // password: this.props.password
+      email: '',
+      password: ''
     };
   }
 
@@ -34,6 +36,10 @@ class Nav extends Component {
     } catch (err) {
       alert("Incorrect email/password");
     }
+    this.setState({
+      email: '',
+      password: ''
+    })
   };
 
   logout = async () => {
@@ -82,7 +88,9 @@ class Nav extends Component {
 
 const mapStateToProps = reduxState => {
   return {
-    id: reduxState.id
+    id: reduxState.id,
+    // email: reduxState.email,
+    // password: reduxState.password
   };
 };
 

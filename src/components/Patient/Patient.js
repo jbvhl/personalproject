@@ -14,6 +14,7 @@ class Patient extends Component {
       remedy: []
     };
   }
+  
   componentDidMount() {
     this.getPatient();
   }
