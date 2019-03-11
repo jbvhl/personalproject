@@ -10,10 +10,8 @@ class Nav extends Component {
     super(props);
 
     this.state = {
-      // email: this.props.email,
-      // password: this.props.password
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     };
   }
 
@@ -33,13 +31,14 @@ class Nav extends Component {
       console.log(res.data);
       this.props.updatePatient(res.data);
       this.props.history.push(`/patient`);
+      console.log(this.props);
     } catch (err) {
       alert("Incorrect email/password");
     }
     this.setState({
-      email: '',
-      password: ''
-    })
+      email: "",
+      password: ""
+    });
   };
 
   logout = async () => {
@@ -88,9 +87,7 @@ class Nav extends Component {
 
 const mapStateToProps = reduxState => {
   return {
-    id: reduxState.id,
-    // email: reduxState.email,
-    // password: reduxState.password
+    id: reduxState.id
   };
 };
 

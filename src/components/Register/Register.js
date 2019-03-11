@@ -3,7 +3,6 @@ import axios from "axios";
 import { updatePatient } from "../../ducks/authReducer";
 import { connect } from "react-redux";
 import "./register.css";
-import Dropdown from 'react-dropdown';
 
 class Register extends Component {
   constructor(props) {
@@ -12,12 +11,13 @@ class Register extends Component {
     this.state = {
       firstName: "",
       lastName: "",
-      gender: '',
-      age: '',
-      height: '',
-      weight: '',
+      gender: "",
+      age: "",
+      height: "",
+      weight: "",
       email: "",
-      password: ""
+      password: "",
+      confirmPassword: ""
     };
     this.register = this.register.bind(this);
   }
@@ -29,6 +29,12 @@ class Register extends Component {
   }
 
   async register() {
+    if (this.state.password !== this.state.confirmPassword) {
+      alert(`Passwords do not match`);
+    }
+    if (this.state.height.includes(`'`)) {
+      this.state.height = this.state.height.split(`'`).join(".");
+    }
     let patient = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
@@ -40,7 +46,7 @@ class Register extends Component {
       password: this.state.password
     };
     try {
-      console.log(patient)
+      console.log(patient);
       let res = await axios.post(`/auth/register`, patient);
       this.props.updatePatient(res.data);
       this.props.history.push("/patient");
@@ -50,7 +56,17 @@ class Register extends Component {
   }
 
   render() {
-    const { firstName, lastName, gender, age, height, weight, email, password } = this.state;
+    const {
+      firstName,
+      lastName,
+      gender,
+      age,
+      height,
+      weight,
+      email,
+      password,
+      confirmPassword
+    } = this.state;
     return (
       <div>
         <h1>Become a Patient!</h1>
@@ -67,31 +83,32 @@ class Register extends Component {
         />
 
         <select
-        value={gender}
-        onChange={e => this.handleChange('gender', e.target.value)}>
+          value={gender}
+          onChange={e => this.handleChange("gender", e.target.value)}
+        >
           <option value="gender">gender</option>
           <option value="female">Female</option>
           <option value="male">Male</option>
-          <option value='n/a'>N/A</option>
-        </select> 
-        
+          <option value="n/a">N/A</option>
+        </select>
+
         <input
           placeholder="Age "
           value={age}
-          onChange={e => this.handleChange('age', e.target.value)}
+          onChange={e => this.handleChange("age", e.target.value)}
         />
-        
+
         <input
           placeholder="Height"
           value={height}
           onChange={e => this.handleChange("height", e.target.value)}
         />
-        
+
         <input
-        placeholder="Weight"
-        value={weight}
-        onChange={e => this.handleChange("weight", e.target.value)}
-      />
+          placeholder="Weight"
+          value={weight}
+          onChange={e => this.handleChange("weight", e.target.value)}
+        />
 
         <input
           placeholder="Email"
@@ -101,8 +118,16 @@ class Register extends Component {
 
         <input
           placeholder="Password"
+          type="password"
           value={password}
           onChange={e => this.handleChange("password", e.target.value)}
+        />
+
+        <input
+          placeholder="Confirm Password"
+          type="password"
+          value={confirmPassword}
+          onChange={e => this.handleChange("confirmPassword", e.target.value)}
         />
 
         <button onClick={this.register}>Create Account</button>
@@ -116,6 +141,10 @@ const mapStateToProps = reduxState => {
     id: reduxState.id,
     firstName: reduxState.firstName,
     lastName: reduxState.lastName,
+    gender: reduxState.gender,
+    age: reduxState.age,
+    height: reduxState.height,
+    weight: reduxState.weight,
     email: reduxState.email
   };
 };

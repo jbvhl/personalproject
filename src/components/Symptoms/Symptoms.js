@@ -7,6 +7,8 @@ class Symptoms extends Component {
     super(props);
 
     this.state = {
+      location: '',
+      
     };
   }
 
