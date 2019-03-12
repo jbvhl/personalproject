@@ -9,6 +9,7 @@ module.exports = {
       res.sendStatus(401);
     }
   },
+  getDoctor: ()
   
   register: async (req, res) => {
     const { firstName, lastName, gender, age, height, weight, email, password } = req.body,

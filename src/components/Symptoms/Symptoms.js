@@ -61,7 +61,7 @@ class Symptoms extends Component {
           <option value='frequently'>Frequently</option>
         </select>
 
-        <p>Please list specific symptoms you're experiencing. (Seperate with a comma)</p>
+        <p>Please list specific symptoms you're experiencing.</p>
 
         <input 
         placeholder='Details about symptoms'

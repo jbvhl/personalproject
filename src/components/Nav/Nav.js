@@ -49,6 +49,9 @@ class Nav extends Component {
 
   render() {
     const { email, password } = this.state;
+    if (this.props.location.pathname !== '/' && !this.props.id) {
+      return null
+    }
     return (
       <div>
         {this.props.id ? (
@@ -77,7 +80,7 @@ class Nav extends Component {
               onChange={e => this.handleChange("password", e.target.value)}
             />
             <button onClick={this.login}>Login</button>
-            <Link to="/register">Register</Link>{" "}
+            <Link to="/register/home">Register</Link>{" "}
           </div>
         )}
       </div>
