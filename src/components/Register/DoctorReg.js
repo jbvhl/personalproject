@@ -37,10 +37,12 @@ class DoctorReg extends Component {
     };
     try {
       console.log(doctor);
-      let res = await axios.post(`/auth/register`, doctor);
+      let res = await axios.post(`/auth/register/doctor`, doctor);
+      console.log(res.data)
       this.props.updateDoctor(res.data);
       this.props.history.push("/doctor");
     } catch (err) {
+      console.log(err)
       alert("Email already exists");
     }
   };

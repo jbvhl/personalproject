@@ -27,8 +27,10 @@ massive(CONNECTION_STRING).then(db => {
 
 //endpoints
 app.get(`/api/patient`, authCtrl.getPatient);
+app.get(`/api/doctor`, authCtrl.getDoctor);
 
 app.post(`/auth/register`, authCtrl.register);
+app.post(`/auth/register/doctor`, authCtrl.docRegister);
 app.post(`/auth/login`, authCtrl.login);
 app.post(`/auth/logout`, authCtrl.logout);
 

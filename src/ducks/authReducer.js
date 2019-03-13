@@ -58,6 +58,7 @@ export default function reducer(state = initialState, action) {
         weight,
         email
       } = payload; // pulling from sql
+      console.log('hoooo', payload)
       return {
         ...state,
         id,
@@ -82,7 +83,8 @@ export default function reducer(state = initialState, action) {
         email: ""
       };
     case UPDATE_DOCTOR:
-      const { id: dId, first_name: dFirstName, last_name: dLastName, email: dEmail } = payload;
+      const { id: dId, first_name: dFirstName, last_name: dLastName, email: dEmail } = payload; 
+      console.log('ooooy', payload)
       return {
         ...state,
         dId,

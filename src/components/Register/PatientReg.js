@@ -48,12 +48,13 @@ class PatientReg extends Component {
       password: this.state.password
     };
     try {
-      console.log(patient);
       let res = await axios.post(`/auth/register`, patient);
+      console.log('meeeep', res.data)
       this.props.updatePatient(res.data);
       this.props.history.push("/patient");
     } catch (err) {
-      alert("Email already exists");
+      console.log(err)
+      alert('Email already exists');
     }
   }
 

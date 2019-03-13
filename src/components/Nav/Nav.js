@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { updatePatient, clearPatient } from "../../ducks/authReducer";
+import { updatePatient, clearPatient, updateDoctor, clearDoctor } from "../../ducks/authReducer";
 import { connect } from "react-redux";
 import "./nav.css";
 
@@ -22,18 +22,23 @@ class Nav extends Component {
   }
 
   login = async () => {
-    let patient = {
+    let user = {
       email: this.state.email,
       password: this.state.password
     };
     try {
-      let res = await axios.post(`/auth/login`, patient);
+      let res = await axios.post(`/auth/login`, user);
       console.log(res.data);
-      this.props.updatePatient(res.data);
-      this.props.history.push(`/patient`);
-      console.log(this.props);
+      if (res.data.patient) {
+        this.props.updatePatient(res.data)
+        this.props.history.push('/patient')
+      } else {
+        this.props.updateDoctor(res.data.doctor)
+        console.log('meep', res.data);
+        this.props.history.push('/doctor')
+      }
     } catch (err) {
-      alert("Incorrect email/password");
+      console.log(err);
     }
     this.setState({
       email: "",
@@ -44,59 +49,71 @@ class Nav extends Component {
   logout = async () => {
     await axios.post(`/auth/logout`);
     this.props.clearPatient();
+    this.props.clearDoctor();
     this.props.history.push("/");
   };
 
   render() {
     const { email, password } = this.state;
-    if (this.props.location.pathname !== '/' && !this.props.id) {
+    if (this.props.location.pathname !== '/' && !this.props.id && !this.props.dId) {
       return null
     }
-    return (
-      <div>
-        {this.props.id ? (
-          <div>
-            <Link to="/">
-              <button>Home</button>
-            </Link>
-            <Link to="/patient">
-              <button>My Profile</button>
-            </Link>
-            <button onClick={this.logout}>Logout</button>
-          </div>
-        ) : (
-          <div>
-            {" "}
-            <input
-              type="text"
-              placeholder="email"
-              value={email}
-              onChange={e => this.handleChange("email", e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={e => this.handleChange("password", e.target.value)}
-            />
-            <button onClick={this.login}>Login</button>
-            <Link to="/register/home">Register</Link>{" "}
-          </div>
-        )}
-      </div>
-    );
+    console.log('merpin', this.props.id, this.props.dId)
+    
+      return (
+        <div>
+          {this.props.id || this.props.dId ? (
+            <div>
+              <Link to="/">
+                <button>Home</button>
+              </Link>
+
+              {this.props.dId ? <Link to="/doctor" >
+                <button>My Profile</button>
+              </Link> : 
+              <Link to="/patient" >
+                <button>My Profile</button>
+              </Link>
+              }
+
+              <button onClick={this.logout}>Logout</button>
+            </div> 
+          ) : (
+            <div>
+              {" "}
+              <input
+                type="text"
+                placeholder="email"
+                value={email}
+                onChange={e => this.handleChange("email", e.target.value)}
+              />
+              <input
+                type="password"
+                placeholder="password"
+                value={password}
+                onChange={e => this.handleChange("password", e.target.value)}
+              />
+              <button onClick={this.login}>Login</button>
+              <Link to="/register/home">Register</Link>{" "}
+            </div>
+          )} 
+        </div>
+      )
   }
 }
 
 const mapStateToProps = reduxState => {
   return {
-    id: reduxState.id
+    id: reduxState.id,
+    dId: reduxState.dId
   };
 };
 
 const mapDispatchToProps = {
   updatePatient,
-  clearPatient
+  clearPatient,
+  updateDoctor,
+  clearDoctor
 };
 
 export default connect(

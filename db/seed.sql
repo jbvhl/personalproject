@@ -9,7 +9,7 @@ create table patient (
     email varchar,
     password varchar,
     doctor_id integer
-)
+);
 
 create table doctor (
     id serial primary key,
