@@ -21,7 +21,14 @@ class Symptoms extends Component {
     });
   }
 
-  
+  // diagnose = async () => {
+  //   let seperateSymp = [];
+
+  //   if (this.state.symptoms) {
+  //     seperateSymp = this.state.symptoms.split(',').push(this.state.symptoms)
+  //   }
+  //   console.log('meeep', seperateSymp);
+  // }
 
   render() {
     return (

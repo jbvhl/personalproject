@@ -1,20 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { updatePatient, clearPatient } from "../../ducks/authReducer";
+import { updatePatient} from "../../ducks/authReducer";
 import "./patient.css";
 import Symptoms from "../Symptoms/Symptoms";
 
 class Patient extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      diagnosis: [],
-      remedy: []
-    };
-  }
-  
   componentDidMount() {
     this.getPatient();
   }
@@ -33,7 +24,7 @@ class Patient extends Component {
 
   render() {
     const { firstName, lastName } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div>
         <h1>
@@ -50,8 +41,7 @@ const mapStateToProps = reduxState => {
 };
 
 const mapDispatchToProps = {
-  updatePatient,
-  clearPatient
+  updatePatient
 };
 
 export default connect(

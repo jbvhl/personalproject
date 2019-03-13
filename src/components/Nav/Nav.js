@@ -28,17 +28,18 @@ class Nav extends Component {
     };
     try {
       let res = await axios.post(`/auth/login`, user);
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data.patient) {
         this.props.updatePatient(res.data)
         this.props.history.push('/patient')
       } else {
         this.props.updateDoctor(res.data.doctor)
-        console.log('meep', res.data);
+        // console.log('meep', res.data);
         this.props.history.push('/doctor')
       }
     } catch (err) {
-      console.log(err);
+      console.log(err)
+      alert('Wrong email/password.');
     }
     this.setState({
       email: "",
@@ -58,7 +59,7 @@ class Nav extends Component {
     if (this.props.location.pathname !== '/' && !this.props.id && !this.props.dId) {
       return null
     }
-    console.log('merpin', this.props.id, this.props.dId)
+    // console.log('merpin', this.props.id, this.props.dId)
     
       return (
         <div>
