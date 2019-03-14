@@ -52,6 +52,8 @@ module.exports = {
         password: hash
       });
 
+      console.log('asdf', patient)
+
     patient = patient[0];
 
     session.patient = patient;

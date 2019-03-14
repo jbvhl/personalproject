@@ -52,7 +52,6 @@ class Symptoms extends Component {
   };
 
   render() {
-    console.log(555555, this.props.symptoms)
     return (
       <div>
         <h2>Symptoms</h2>

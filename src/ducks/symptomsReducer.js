@@ -25,7 +25,6 @@ export default function reducer(state = initialState, action) {
   switch (type) {
     case UPDATE_SYMPTOMS:
       const { id, location, symptoms } = payload;
-      console.log('merrrrp', payload)
       return { ...state, id, location, symptoms };
     case CLEAR_SYMPTOMS:
       return { ...state, id: 0, location: "", symptoms: "" };

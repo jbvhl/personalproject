@@ -58,7 +58,7 @@ export default function reducer(state = initialState, action) {
         weight,
         email
       } = payload; // pulling from sql
-      // console.log('hoooo', payload)
+      console.log('hoooo', payload)
       return {
         ...state,
         id,

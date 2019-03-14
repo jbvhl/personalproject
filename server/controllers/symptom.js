@@ -10,16 +10,24 @@ module.exports = {
         symptom
       });
     }));
-    console.log(response)
-    res.status(200).send(response[0][0]);
+    for(let i=0; i<response.length; i++){
+      response[i] = response[i][0]
+    }
+    console.log('sympRes', response)
+    res.status(200).send(response);
   },
 
   getSymp: async (req, res) => {
     const {id} = req.session.patient,
     db = req.app.get('db');
-    let resp = await db.diagnose.getSymp({
-      id
-    })
-    res.status(200).send(resp);
+
+    if (id) {
+      let resp = await db.diagnose.getSymp({
+        id
+      })
+      return res.status(200).send(resp);
+    } else {
+      return null;
+    }
   }
 };
