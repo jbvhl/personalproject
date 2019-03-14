@@ -1,19 +1,28 @@
 import React, { Component } from "react";
 import "./symptoms.css";
 import axios from "axios";
+import { updateSymptoms } from "../../ducks/symptomsReducer";
+import { connect } from "react-redux";
 
 class Symptoms extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      location: '',
-      severity: '',
-      start: '',
-      occurance: '',
-      symptoms: ''
+      location: "",
+      symptoms: "",
+      toggle: false
     };
   }
+
+  componentDidMount() {
+    this.getSymp();
+  }
+
+  getSymp = async () => {
+    let res = await axios.get("/api/symptoms");
+    this.props.updateSymptoms(res.data);
+  };
 
   handleChange(prop, val) {
     this.setState({
@@ -21,64 +30,86 @@ class Symptoms extends Component {
     });
   }
 
-  // diagnose = async () => {
-  //   let seperateSymp = [];
-
-  //   if (this.state.symptoms) {
-  //     seperateSymp = this.state.symptoms.split(',').push(this.state.symptoms)
-  //   }
-  //   console.log('meeep', seperateSymp);
-  // }
+  diagnose = async () => {
+    const { location, symptoms} = this.state;
+    let diagnose = {
+      location,
+      seperateSymp: []
+    };
+    if (symptoms) {
+      diagnose.seperateSymp = symptoms.split(",");
+    }
+    try {
+      let res = await axios.post("/api/symptoms", diagnose);
+      this.props.updateSymptoms(res.data);
+      console.log('meep', this.props.updateSymptoms(res.data))
+    } catch (err) {
+      console.log(err);
+    }
+    this.setState({
+      toggle: true
+    });
+  };
 
   render() {
     return (
       <div>
         <h2>Symptoms</h2>
-        
-        <select onChange={(e) => this.handleChange('location', e.target.value)}>
-          <option>Where does it hurt?</option>
-          <option value='head'>Head</option>
-          <option value='chest'>Chest</option>
-          <option value='arms'>Arms</option>
-          <option value='legs'>Legs</option>
-          <option value='stomach'>Stomach</option>
-          <option value='spine'>Spine</option>
-          <option value='back'>Back</option>
-          <option value='other'>Other</option>
-        </select>
+        {this.state.toggle ? this.props.symptoms.map(symptom => {
+          return (
+            console.log('aloha', symptom)
+            // <div>
+            // {symptom}
+            // </div>
+          )
+        }) : (
+          <div>
+            <select
+              onChange={e => this.handleChange("location", e.target.value)}
+            >
+              <option>Where does it hurt?</option>
+              <option value="head">Head</option>
+              <option value="chest">Chest</option>
+              <option value="arms">Arms</option>
+              <option value="hands">Hands</option>
+              <option value="stomach">Stomach</option>
+              <option value="legs">Legs</option>
+              <option value="feet">Feet</option>
+              <option value="spine">Spine</option>
+              <option value="back">Back</option>
+              <option value="other">Other</option>
+            </select>
 
-        <select onChange={(e) => this.handleChange('severity', e.target.value)}>
-          <option>How severe is your pain?</option>
-          <option value='mild'>Mild</option>
-          <option value='moderate'>Moderate</option>
-          <option value='severe'>Severe</option>
-        </select>
+            <p>Please list specific symptoms you're experiencing.</p>
+            <p>(Seperate symptoms by using a comma)</p>
 
-        <select onChange={(e) => this.handleChange('start', e.target.value)}>
-          <option>When did it start?</option>
-          <option value='recently'>Recently (within a week)</option>
-          <option value='weeks'>A Week(s)</option>
-          <option value='months'>A Month(s)</option>
-        </select>
+            <input
+              placeholder="Details about symptoms"
+              value={this.state.symptoms}
+              onChange={e => this.handleChange("symptoms", e.target.value)}
+            />
 
-        <select onChange={(e) => this.handleChange('occurance', e.target.value)}>
-          <option>How often does it occur?</option>
-          <option value='one time'>One Time</option>
-          <option value='sometimes'>Sometimes</option>
-          <option value='frequently'>Frequently</option>
-        </select>
-
-        <p>Please list specific symptoms you're experiencing.</p>
-
-        <input 
-        placeholder='Details about symptoms'
-        value={this.state.symptoms}
-        onChange={e => this.handleChange('symptoms', e.target.value)}/>
-
-        <button onClick={this.diagnose}>Diagnose Me!</button>
+            <button onClick={this.diagnose}>Diagnose Me!</button>
+          </div>
+        )}
       </div>
     );
   }
 }
 
-export default Symptoms;
+const mapStateToProps = reduxState => {
+  return {
+    id: reduxState.id,
+    location: reduxState.location,
+    symptoms: reduxState.symptoms
+  };
+};
+
+const mapDispatchToProps = {
+  updateSymptoms
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Symptoms);

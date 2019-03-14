@@ -36,9 +36,7 @@ class DoctorReg extends Component {
       password: this.state.password
     };
     try {
-      console.log(doctor);
       let res = await axios.post(`/auth/register/doctor`, doctor);
-      console.log(res.data)
       this.props.updateDoctor(res.data);
       this.props.history.push("/doctor");
     } catch (err) {
@@ -100,6 +98,7 @@ class DoctorReg extends Component {
 }
 
 const mapStateToProps = reduxState => {
+  reduxState = reduxState.authReducer
     return {
         dId: reduxState.dID,
         dFirstName: reduxState.dFirstName,

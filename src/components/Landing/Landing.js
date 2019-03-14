@@ -6,6 +6,9 @@ class Landing extends Component {
     return (
       <div>
         <h1>Diagnosed</h1>
+        <div>
+          Articles
+        </div>
       </div>
     );
   }

@@ -24,7 +24,6 @@ class Patient extends Component {
 
   render() {
     const { firstName, lastName } = this.props;
-    // console.log(this.props);
     return (
       <div>
         <h1>
@@ -37,6 +36,7 @@ class Patient extends Component {
 }
 
 const mapStateToProps = reduxState => {
+  reduxState = reduxState.authReducer;
   return reduxState;
 };
 

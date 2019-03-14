@@ -4,7 +4,9 @@ const express = require('express'),
     massive = require('massive');
 
 //controllers
-const authCtrl = require('./controllers/auth');
+const authCtrl = require('./controllers/auth'),
+    sympCtrl = require('./controllers/symptom');
+
 
 const app = express(),
     {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, API_ID, API_KEYS} = process.env;
@@ -12,8 +14,8 @@ const app = express(),
 app.use(express.json());
 app.use(session({
     secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: {
         maxAge: 82364213
     }
@@ -33,5 +35,8 @@ app.post(`/auth/register`, authCtrl.register);
 app.post(`/auth/register/doctor`, authCtrl.docRegister);
 app.post(`/auth/login`, authCtrl.login);
 app.post(`/auth/logout`, authCtrl.logout);
+
+app.get('/api/symptoms', sympCtrl.getSymp);
+app.post('/api/symptoms', sympCtrl.updateSymp);
 
 

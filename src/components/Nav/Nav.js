@@ -104,6 +104,7 @@ class Nav extends Component {
 }
 
 const mapStateToProps = reduxState => {
+  reduxState = reduxState.authReducer
   return {
     id: reduxState.id,
     dId: reduxState.dId

@@ -19,14 +19,12 @@ create table doctor (
     password varchar,
 )
 
--- create table symptom (
---     id serial primary key,
---     location varchar,
---     severity varchar,
---     start varchar,
---     occurance varchar,
---     symptom varchar
--- )
+create table symptom (
+    id serial primary key,
+    patient_id integer,
+    location varchar,
+    symptom varchar
+)
 
 -- create table diagnosis (
 --     id serial primary key,

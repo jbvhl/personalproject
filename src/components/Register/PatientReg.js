@@ -31,25 +31,26 @@ class PatientReg extends Component {
   }
 
   async register() {
-    if (this.state.password !== this.state.confirmPassword) {
+    const {firstName, lastName, gender, age, height, weight, email, password, confirmPassword} = this.state;
+    if (password !== confirmPassword) {
       alert(`Passwords do not match`);
     }
-    if (this.state.height.includes(`'`)) {
-      this.state.height = this.state.height.split(`'`).join(".");
+    if (height.includes(`'`)) {
+      height.split(`'`).join(".");
     }
+
     let patient = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      gender: this.state.gender,
-      age: this.state.age,
-      height: this.state.height,
-      weight: this.state.weight,
-      email: this.state.email,
-      password: this.state.password
+      firstName,
+      lastName,
+      gender,
+      age,
+      height,
+      weight,
+      email,
+      password
     };
     try {
       let res = await axios.post(`/auth/register`, patient);
-      console.log('meeeep', res.data)
       this.props.updatePatient(res.data);
       this.props.history.push("/patient");
     } catch (err) {
@@ -70,6 +71,7 @@ class PatientReg extends Component {
       password,
       confirmPassword
     } = this.state;
+
     return (
       <div>
         <Link to='/register/home'>
@@ -143,6 +145,7 @@ class PatientReg extends Component {
 }
 
 const mapStateToProps = reduxState => {
+  reduxState = reduxState.authReducer;
   return {
     id: reduxState.id,
     firstName: reduxState.firstName,
