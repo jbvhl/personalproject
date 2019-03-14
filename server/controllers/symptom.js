@@ -3,14 +3,15 @@ module.exports = {
     const { location, seperateSymp } = req.body,
     db = req.app.get("db");
 
-    await Promise.all(seperateSymp.map(symptom => {
-      db.diagnose.newSymp({
+    let response =  await Promise.all(seperateSymp.map(symptom => {
+      return db.diagnose.newSymp({
         patient_id: req.session.patient ? req.session.patient.id : null,
         location,
         symptom
       });
     }));
-    res.sendStatus(200);
+    console.log(response)
+    res.status(200).send(response[0][0]);
   },
 
   getSymp: async (req, res) => {

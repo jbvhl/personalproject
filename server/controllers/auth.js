@@ -11,16 +11,25 @@ module.exports = {
   },
 
   getDoctor: (req, res) => {
-    const {doctor} = req.session;
+    const { doctor } = req.session;
     if (doctor) {
       res.status(200).send(doctor);
     } else {
       res.sendStatus(401);
     }
   },
-  
+
   register: async (req, res) => {
-    const { firstName, lastName, gender, age, height, weight, email, password } = req.body,
+    const {
+        firstName,
+        lastName,
+        gender,
+        age,
+        height,
+        weight,
+        email,
+        password
+      } = req.body,
       { session } = req,
       db = req.app.get("db");
     let takenEmail = await db.auth.checkEmail({ email });
@@ -82,7 +91,7 @@ module.exports = {
       { session } = req,
       db = req.app.get("db");
     let patient = await db.auth.login({ email });
-    let doctor = await db.auth.docLogin({email});
+    let doctor = await db.auth.docLogin({ email });
     patient = patient[0];
     doctor = doctor[0];
 
@@ -93,16 +102,18 @@ module.exports = {
       if (authPatient) {
         delete patient.password;
         session.patient = patient;
-        res.status(200).send({patient: session.patient});
-      } 
+        return res.status(200).send({ patient: session.patient });
+      } else {
+        return res.sendStatus(401);
+      }
     } else {
       let authDoctor = bcrypt.compareSync(password, doctor.password);
       if (authDoctor) {
         delete doctor.password;
         session.doctor = doctor;
-        res.status(200).send({doctor: session.doctor});
+        return res.status(200).send({ doctor: session.doctor });
       } else {
-        res.sendStatus(401);
+        return res.sendStatus(401);
       }
     }
   },

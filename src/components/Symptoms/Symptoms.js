@@ -31,7 +31,7 @@ class Symptoms extends Component {
   }
 
   diagnose = async () => {
-    const { location, symptoms} = this.state;
+    const { location, symptoms } = this.state;
     let diagnose = {
       location,
       seperateSymp: []
@@ -42,7 +42,7 @@ class Symptoms extends Component {
     try {
       let res = await axios.post("/api/symptoms", diagnose);
       this.props.updateSymptoms(res.data);
-      console.log('meep', this.props.updateSymptoms(res.data))
+      console.log("meep", res.data);
     } catch (err) {
       console.log(err);
     }
@@ -52,17 +52,15 @@ class Symptoms extends Component {
   };
 
   render() {
+    console.log(555555, this.props.symptoms)
     return (
       <div>
         <h2>Symptoms</h2>
-        {this.state.toggle ? this.props.symptoms.map(symptom => {
-          return (
-            console.log('aloha', symptom)
-            // <div>
-            // {symptom}
-            // </div>
-          )
-        }) : (
+        {this.state.toggle ? (
+          this.props.reduxState.map(symptom => {
+            return console.log("aloha", symptom);
+          })
+        ) : (
           <div>
             <select
               onChange={e => this.handleChange("location", e.target.value)}
@@ -98,10 +96,11 @@ class Symptoms extends Component {
 }
 
 const mapStateToProps = reduxState => {
+  reduxState = reduxState.symptomsReducer
   return {
     id: reduxState.id,
     location: reduxState.location,
-    symptoms: reduxState.symptoms
+    symptoms: reduxState
   };
 };
 
