@@ -31,9 +31,8 @@ class Symptoms extends Component {
     });
   }
 
-  handleEditToggle(prop, val) {
+  handleEditToggle() {
     this.setState({
-      [prop]: val,
       editToggle: true
     });
   }
@@ -69,14 +68,8 @@ class Symptoms extends Component {
               return (
                 <div>
                   <ul>{symptom}</ul>
-                  <button
-                    value={this.state.symptom}
-                    onClick={e =>
-                      this.handleEditToggle("symptom", e.target.value)
-                    }
-                  >
-                    edit
-                  </button>
+                  <button>Edit</button>
+                  <button>Delete</button>
                 </div>
               );
             })}
