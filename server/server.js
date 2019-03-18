@@ -9,7 +9,7 @@ const authCtrl = require('./controllers/auth'),
 
 
 const app = express(),
-    {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, API_ID, API_KEYS} = process.env;
+    {SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env;
 
 app.use(express.json());
 app.use(session({
@@ -30,6 +30,7 @@ massive(CONNECTION_STRING).then(db => {
 //endpoints
 app.get(`/api/patient`, authCtrl.getPatient);
 app.get(`/api/doctor`, authCtrl.getDoctor);
+
 
 app.post(`/auth/register`, authCtrl.register);
 app.post(`/auth/register/doctor`, authCtrl.docRegister);
