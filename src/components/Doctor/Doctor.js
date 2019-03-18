@@ -25,7 +25,7 @@ class Doctor extends Component {
         return (
             <div>
                 <h1>
-                    Hello, Dr.{dLastName}
+                    Hello, Dr. {dLastName}
                 </h1>
             </div>
         )

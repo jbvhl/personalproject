@@ -13,7 +13,6 @@ module.exports = {
     for(let i=0; i<response.length; i++){
       response[i] = response[i][0]
     }
-    console.log('sympRes', response)
     res.status(200).send(response);
   },
 
@@ -29,5 +28,9 @@ module.exports = {
     } else {
       return null;
     }
+  },
+
+  deleteSymp: (req, res) => {
+    
   }
 };

@@ -11,7 +11,8 @@ class Symptoms extends Component {
     this.state = {
       location: "",
       symptoms: "",
-      toggle: false
+      toggle: false,
+      editToggle: false
     };
   }
 
@@ -30,6 +31,13 @@ class Symptoms extends Component {
     });
   }
 
+  handleEditToggle(prop, val) {
+    this.setState({
+      [prop]: val,
+      editToggle: true
+    });
+  }
+
   diagnose = async () => {
     const { location, symptoms } = this.state;
     let diagnose = {
@@ -42,7 +50,6 @@ class Symptoms extends Component {
     try {
       let res = await axios.post("/api/symptoms", diagnose);
       this.props.updateSymptoms(res.data);
-      console.log("meep", res.data);
     } catch (err) {
       console.log(err);
     }
@@ -56,9 +63,25 @@ class Symptoms extends Component {
       <div>
         <h2>Symptoms</h2>
         {this.state.toggle ? (
-          this.props.reduxState.map(symptom => {
-            return console.log("aloha", symptom);
-          })
+          <div>
+            <h3>Are these your symptoms?</h3>
+            {this.props.symptoms.map(symptom => {
+              return (
+                <div>
+                  <ul>{symptom}</ul>
+                  <button
+                    value={this.state.symptom}
+                    onClick={e =>
+                      this.handleEditToggle("symptom", e.target.value)
+                    }
+                  >
+                    edit
+                  </button>
+                </div>
+              );
+            })}
+            <button>Yes, diagnose me.</button>
+          </div>
         ) : (
           <div>
             <select
@@ -86,7 +109,7 @@ class Symptoms extends Component {
               onChange={e => this.handleChange("symptoms", e.target.value)}
             />
 
-            <button onClick={this.diagnose}>Diagnose Me!</button>
+            <button onClick={this.diagnose}>Next</button>
           </div>
         )}
       </div>
@@ -95,11 +118,9 @@ class Symptoms extends Component {
 }
 
 const mapStateToProps = reduxState => {
-  reduxState = reduxState.symptomsReducer
+  reduxState = reduxState.symptomsReducer;
   return {
-    id: reduxState.id,
-    location: reduxState.location,
-    symptoms: reduxState
+    symptoms: reduxState.symptoms
   };
 };
 
