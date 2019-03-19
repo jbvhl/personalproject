@@ -30,7 +30,13 @@ module.exports = {
     }
   },
 
-  deleteSymp: (req, res) => {
-    
+  deleteSymp: async (req, res) => {
+    const {symptom} = req.params,
+    db = req.app.get('db');
+    await db.diagnose.deleteSymp({
+      symptom
+    }).then(() => {
+      res.sendStatus(200);
+    });
   }
 };

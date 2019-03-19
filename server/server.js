@@ -39,5 +39,6 @@ app.post(`/auth/logout`, authCtrl.logout);
 
 app.get('/api/symptoms', sympCtrl.getSymp);
 app.post('/api/symptoms', sympCtrl.updateSymp);
+app.delete(`/api/symptoms/:symptom`, sympCtrl.deleteSymp);
 
 

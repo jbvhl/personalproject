@@ -3,6 +3,7 @@ import "./symptoms.css";
 import axios from "axios";
 import { updateSymptoms } from "../../ducks/symptomsReducer";
 import { connect } from "react-redux";
+import Symptom from "./Symptom";
 
 class Symptoms extends Component {
   constructor(props) {
@@ -11,8 +12,7 @@ class Symptoms extends Component {
     this.state = {
       location: "",
       symptoms: "",
-      toggle: false,
-      editToggle: false
+      toggle: false
     };
   }
 
@@ -25,17 +25,11 @@ class Symptoms extends Component {
     this.props.updateSymptoms(res.data);
   };
 
-  handleChange(prop, val) {
+  handleChange = (prop, val) => {
     this.setState({
       [prop]: val
     });
-  }
-
-  handleEditToggle() {
-    this.setState({
-      editToggle: true
-    });
-  }
+  };
 
   diagnose = async () => {
     const { location, symptoms } = this.state;
@@ -64,13 +58,13 @@ class Symptoms extends Component {
         {this.state.toggle ? (
           <div>
             <h3>Are these your symptoms?</h3>
-            {this.props.symptoms.map(symptom => {
+            {this.props.symptoms.map((symptom, i) => {
               return (
-                <div>
-                  <ul>{symptom}</ul>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </div>
+                <Symptom
+                  symptom={symptom}
+                  key={i}
+                  handleChange={this.handleChange}
+                />
               );
             })}
             <button>Yes, diagnose me.</button>

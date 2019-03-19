@@ -37,19 +37,19 @@ class Landing extends Component {
       .slice(0, 3)
       .map((article, i) => {
         return (
-          <div key={i}>
+          <div className='article' key={i}>
             <img src={article.urlToImage} />
             <h3>{article.title}</h3>
             <p>{article.description}</p>
+            <a href={article.url}>Read More.</a>
           </div>
         );
       });
 
     return (
       <div>
-        <h1>Diagnosed</h1>
+        <h1 className='Title'>Diagnosed</h1>
         <div>
-          Articles
           {articles}
         </div>
       </div>
