@@ -37,10 +37,10 @@ class Symptom extends Component {
     });
   };
 
-  saveSymp = async () => {
+  updateSymp = async () => {
     const { id } = this.props;
     axios.put(`/api/symptoms/${id}`, {symptom:this.state.symptom}).then(res => {
-      console.log('this is updated', res)
+      console.log(res)
     })
     this.setState({
       saveToggle: !this.state.saveToggle,
@@ -58,7 +58,7 @@ class Symptom extends Component {
               value={this.state.symptom}
               onChange={e => this.handleChange('symptom', e.target.value)}
             />
-            <button onClick={this.saveSymp}>Save</button>
+            <button onClick={this.updateSymp}>Save</button>
           </div>
         ) : (
           <div>

@@ -1,5 +1,5 @@
 module.exports = {
-  updateSymp: async (req, res) => {
+  createSymp: async (req, res) => {
     const { location, seperateSymp } = req.body,
     db = req.app.get("db");
 
@@ -41,7 +41,7 @@ module.exports = {
     });
   },
 
-  editSymp: async (req, res) => {
+  updateSymp: async (req, res) => {
     const {symptom} = req.body,
     {id} = req.params,
     db = req.app.get('db');

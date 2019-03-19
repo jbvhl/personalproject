@@ -8,9 +8,6 @@ const UPDATE_SYMPTOMS = "UPDATE_SYMPTOMS";
 const CLEAR_SYMPTOMS = "CLEAR_SYMPTOMS";
 
 export function updateSymptoms(symptoms) {
-  // diagnose = diagnose.map(obj => {
-  //   return obj.symptom;
-  // })
   return {
     type: UPDATE_SYMPTOMS,
     payload: symptoms
