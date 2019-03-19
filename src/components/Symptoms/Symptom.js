@@ -7,36 +7,46 @@ class Symptom extends Component {
 
     this.state = {
       editToggle: false,
-      edit: "",
-      deleteToggle: false
+      deleteToggle: false,
+      saveToggle: false,
+      symptom: this.props.symptom
     };
     this.handleEditToggle = this.handleEditToggle.bind(this);
-    this.handleDeleteToggle = this.handleDeleteToggle.bind(this);
   }
 
-  handleEditToggle() {
+  handleChange = (prop, val) => {
     this.setState({
-      editToggle: true
-    });
-  }
-
-  handleDeleteToggle() {
-    this.setState({
-      deleteToggle: true
-    });
-  }
-
-  deleteSymp = () => {
-    const { symptom } = this.props;
-    console.log("this is id", symptom);
-    axios.delete(`/api/symptoms/${symptom}`).then(res => {
-      console.log("adsf", res);
+      [prop]: val
     });
   };
 
-  // saveSymp = async () => {
+  handleEditToggle() {
+    this.setState({
+      editToggle: !this.state.editToggle
+    });
+  }
 
-  // };
+
+  deleteSymp = () => {
+    const { symptom } = this.props;
+    axios.delete(`/api/symptoms/${symptom}`).then(res => {
+      console.log(res);
+    });
+    this.setState({
+      deleteToggle: true
+    });
+  };
+
+  saveSymp = async () => {
+    const { id } = this.props;
+    axios.put(`/api/symptoms/${id}`, {symptom:this.state.symptom}).then(res => {
+      console.log('this is updated', res)
+    })
+    this.setState({
+      saveToggle: !this.state.saveToggle,
+      editToggle: !this.state.editToggle
+    });
+  };
 
   render() {
     return (
@@ -45,10 +55,10 @@ class Symptom extends Component {
           <div>
             <input
               type="text"
-              value={this.props.symptom}
-              onChange={e => this.props.handleChange(e.target.value)}
+              value={this.state.symptom}
+              onChange={e => this.handleChange('symptom', e.target.value)}
             />
-            <button>Save</button>
+            <button onClick={this.saveSymp}>Save</button>
           </div>
         ) : (
           <div>
@@ -56,11 +66,9 @@ class Symptom extends Component {
               <p>Deleted</p>
             ) : (
               <div>
-                <ul>{this.props.symptom}</ul>
+                <ul>{this.state.symptom}</ul>
                 <button onClick={this.handleEditToggle}>Edit</button>
-                <button onClick={this.handleDeleteToggle}>
                   <button onClick={this.deleteSymp}>Delete</button>
-                </button>
               </div>
             )}
           </div>

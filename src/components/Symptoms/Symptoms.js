@@ -63,9 +63,11 @@ class Symptoms extends Component {
           <div>
             <h3>Are these your symptoms?</h3>
             {this.props.symptoms.map((symptom, i) => {
+              console.log(symptom)
               return (
                 <Symptom
-                  symptom={symptom}
+                  symptom={symptom.symptom}
+                  id={symptom.id}
                   key={i}
                   handleChange={this.handleChange}
                 />

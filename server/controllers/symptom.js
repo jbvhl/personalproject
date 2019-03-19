@@ -13,6 +13,7 @@ module.exports = {
     for(let i=0; i<response.length; i++){
       response[i] = response[i][0]
     }
+    // console.log(response)
     res.status(200).send(response);
   },
 
@@ -41,6 +42,15 @@ module.exports = {
   },
 
   editSymp: async (req, res) => {
-    
+    const {symptom} = req.body,
+    {id} = req.params,
+    db = req.app.get('db');
+    // console.log('herpa merp', id, symptom)
+    let resp = await db.diagnose.updateSymp({
+      symptom,
+      id
+    })
+    // console.log(resp);
+    res.status(200).send(resp);
   } 
 };

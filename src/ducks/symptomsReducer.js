@@ -7,13 +7,13 @@ const initialState = {
 const UPDATE_SYMPTOMS = "UPDATE_SYMPTOMS";
 const CLEAR_SYMPTOMS = "CLEAR_SYMPTOMS";
 
-export function updateSymptoms(diagnose) {
-  diagnose = diagnose.map(obj => {
-    return obj.symptom;
-  })
+export function updateSymptoms(symptoms) {
+  // diagnose = diagnose.map(obj => {
+  //   return obj.symptom;
+  // })
   return {
     type: UPDATE_SYMPTOMS,
-    payload: diagnose
+    payload: symptoms
   };
 }
 
