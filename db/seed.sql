@@ -9,14 +9,14 @@ create table patient (
     email varchar,
     password varchar,
     doctor_id integer
-);
+)
 
 create table doctor (
     id serial primary key,
     first_name varchar,
     last_name varchar,
     email varchar,
-    password varchar,
+    password varchar
 )
 
 create table symptom (
