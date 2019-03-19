@@ -34,7 +34,7 @@ module.exports = {
       db = req.app.get("db");
     let takenEmail = await db.auth.checkEmail({ email });
     takenEmail = +takenEmail[0].count;
-
+    
     if (takenEmail !== 0) {
       return res.sendStatus(401);
     }
@@ -52,7 +52,7 @@ module.exports = {
         password: hash
       });
 
-      console.log('asdf', patient)
+      // console.log('asdf', patient)
 
     patient = patient[0];
 

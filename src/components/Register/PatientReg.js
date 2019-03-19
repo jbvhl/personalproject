@@ -31,12 +31,13 @@ class PatientReg extends Component {
   }
 
   async register() {
-    const {firstName, lastName, gender, age, height, weight, email, password, confirmPassword} = this.state;
+    let {firstName, lastName, gender, age, height, weight, email, password, confirmPassword} = this.state;
     if (password !== confirmPassword) {
       alert(`Passwords do not match`);
     }
+  
     if (height.includes(`'`)) {
-      height.split(`'`).join(".");
+      height = height.split(`'`).join(".");
     }
 
     let patient = {

@@ -4,7 +4,7 @@ module.exports = {
     db = req.app.get("db");
 
     let response =  await Promise.all(seperateSymp.map(symptom => {
-      return db.diagnose.newSymp({
+      return db.symptoms.newSymp({
         patient_id: req.session.patient ? req.session.patient.id : null,
         location,
         symptom
@@ -22,7 +22,7 @@ module.exports = {
     db = req.app.get('db');
 
     if (id) {
-      let resp = await db.diagnose.getSymp({
+      let resp = await db.symptoms.getSymp({
         id
       })
       return res.status(200).send(resp);
@@ -34,7 +34,7 @@ module.exports = {
   deleteSymp: async (req, res) => {
     const {symptom} = req.params,
     db = req.app.get('db');
-    await db.diagnose.deleteSymp({
+    await db.symptoms.deleteSymp({
       symptom
     }).then(() => {
       res.sendStatus(200);
@@ -46,7 +46,7 @@ module.exports = {
     {id} = req.params,
     db = req.app.get('db');
     // console.log('herpa merp', id, symptom)
-    let resp = await db.diagnose.updateSymp({
+    let resp = await db.symptoms.updateSymp({
       symptom,
       id
     })
