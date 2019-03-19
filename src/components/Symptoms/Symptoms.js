@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./symptoms.css";
+import "./symptoms.scss";
 import axios from "axios";
 import { updateSymptoms } from "../../ducks/symptomsReducer";
 import { connect } from "react-redux";

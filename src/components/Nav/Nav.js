@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { updatePatient, clearPatient, updateDoctor, clearDoctor } from "../../ducks/authReducer";
 import { connect } from "react-redux";
-import "./nav.css";
+import "./nav.scss";
 
 class Nav extends Component {
   constructor(props) {

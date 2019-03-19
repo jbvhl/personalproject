@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { updatePatient} from "../../ducks/authReducer";
-import "./patient.css";
+import "./patient.scss";
 import Symptoms from "../Symptoms/Symptoms";
 
 class Patient extends Component {

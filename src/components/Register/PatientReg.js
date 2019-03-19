@@ -3,7 +3,7 @@ import axios from "axios";
 import { updatePatient } from "../../ducks/authReducer";
 import { connect } from "react-redux";
 import {Link} from 'react-router-dom';
-import "./PatientReg.css";
+import "./PatientReg.scss";
 
 class PatientReg extends Component {
   constructor(props) {

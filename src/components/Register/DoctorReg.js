@@ -3,7 +3,7 @@ import axios from "axios";
 import {updateDoctor} from '../../ducks/authReducer';
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import './DoctorReg.css';
+import './DoctorReg.scss';
 
 class DoctorReg extends Component {
   constructor(props) {
