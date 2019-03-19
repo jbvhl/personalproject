@@ -11,6 +11,7 @@ class Symptom extends Component {
       deleteToggle: false
     };
     this.handleEditToggle = this.handleEditToggle.bind(this);
+    this.handleDeleteToggle = this.handleDeleteToggle.bind(this);
   }
 
   handleEditToggle() {
@@ -33,12 +34,13 @@ class Symptom extends Component {
     });
   };
 
-  saveSymp = () => {};
+  // saveSymp = async () => {
+
+  // };
 
   render() {
     return (
       <div>
-        <ul>{this.props.symptom}</ul>
         {this.state.editToggle ? (
           <div>
             <input
@@ -50,10 +52,15 @@ class Symptom extends Component {
           </div>
         ) : (
           <div>
-            {this.state.deleteToggle ? <p>Deleted</p> : (
+            {this.state.deleteToggle ? (
+              <p>Deleted</p>
+            ) : (
               <div>
+                <ul>{this.props.symptom}</ul>
                 <button onClick={this.handleEditToggle}>Edit</button>
-                <button onClick={this.deleteSymp}>Delete</button>
+                <button onClick={this.handleDeleteToggle}>
+                  <button onClick={this.deleteSymp}>Delete</button>
+                </button>
               </div>
             )}
           </div>

@@ -38,5 +38,9 @@ module.exports = {
     }).then(() => {
       res.sendStatus(200);
     });
-  }
+  },
+
+  editSymp: async (req, res) => {
+    
+  } 
 };

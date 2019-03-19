@@ -39,7 +39,7 @@ class Landing extends Component {
         return (
           <div className="article" key={i}>
           <div>
-            <img src={article.urlToImage} />
+            <img src={article.urlToImage} alt='img'/>
             </div>
             <div className='articleInfo'>
             <h3>{article.title}</h3>
