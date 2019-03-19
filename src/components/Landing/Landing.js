@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./landing.css";
+import "./landing.scss";
 import axios from "axios";
 
 class Landing extends Component {
@@ -37,21 +37,23 @@ class Landing extends Component {
       .slice(0, 3)
       .map((article, i) => {
         return (
-          <div className='article' key={i}>
+          <div className="article" key={i}>
+          <div>
             <img src={article.urlToImage} />
+            </div>
+            <div className='articleInfo'>
             <h3>{article.title}</h3>
             <p>{article.description}</p>
             <a href={article.url}>Read More.</a>
+            </div>
           </div>
         );
       });
 
     return (
       <div>
-        <h1 className='Title'>Diagnosed</h1>
-        <div>
-          {articles}
-        </div>
+        <h1 className="Title">Diagnosed</h1>
+        <div>{articles}</div>
       </div>
     );
   }

@@ -1,0 +1,17 @@
+.article {
+    display: flex;
+    flex-direction: row;
+    border: solid;
+    width: 40%;
+    align-items: center;
+    padding: 2%;
+    img {
+        height: 200px;
+        width: auto;
+    }
+    .articleInfo {
+        h3, p {
+            padding: 3%;
+        }
+    }
+}

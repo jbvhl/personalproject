@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 class Symptom extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        editToggle: false,
-        edit: "",
-        deleteToggle: false
+      editToggle: false,
+      edit: "",
+      deleteToggle: false
     };
     this.handleEditToggle = this.handleEditToggle.bind(this);
   }
@@ -26,16 +26,14 @@ class Symptom extends Component {
   }
 
   deleteSymp = () => {
-      const {symptom} = this.props
-      console.log('this is id', symptom)
-      axios.delete(`/api/symptoms/${symptom}`).then(res => {
-          console.log('adsf', res)
-      });
-  }
+    const { symptom } = this.props;
+    console.log("this is id", symptom);
+    axios.delete(`/api/symptoms/${symptom}`).then(res => {
+      console.log("adsf", res);
+    });
+  };
 
-  saveSymp = () => {
-
-  }
+  saveSymp = () => {};
 
   render() {
     return (
@@ -51,13 +49,13 @@ class Symptom extends Component {
             <button>Save</button>
           </div>
         ) : (
-            <div>
-          <button onClick={this.handleEditToggle}>Edit</button>
-          <button onClick={this.deleteSymp}>Delete</button>
-          {/* {this.state.deleteToggle ? (
-              null
-          )
-          } */}
+          <div>
+            {this.state.deleteToggle ? <p>Deleted</p> : (
+              <div>
+                <button onClick={this.handleEditToggle}>Edit</button>
+                <button onClick={this.deleteSymp}>Delete</button>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -51,6 +51,10 @@ class Symptoms extends Component {
     });
   };
 
+  // diagnoseMe = async () => {
+
+  // }
+
   render() {
     return (
       <div>
