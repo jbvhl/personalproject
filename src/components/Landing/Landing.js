@@ -7,12 +7,14 @@ class Landing extends Component {
     super(props);
 
     this.state = {
-      articles: []
+      articles: [],
+      illnesses: []
     };
   }
 
   componentDidMount() {
     this.getArticles();
+    this.getIllnesses();
   }
 
   getArticles = async () => {
@@ -29,6 +31,18 @@ class Landing extends Component {
       });
   };
 
+  getIllnesses = async () => {
+    await axios
+      .get(
+        `https://mobilesvc.sickweather.com/ws/v2.0/illnesses/getIllnesses.php?api_key=fnw86kvhyt4yfgj4hmjxtqbk5anczmne`
+      )
+      .then(res => {
+        this.setState({
+          illnesses: res.data
+        });
+      });
+  };
+
   render() {
     const articles = this.state.articles
       .filter((article, i, arr) => {
@@ -38,22 +52,35 @@ class Landing extends Component {
       .map((article, i) => {
         return (
           <div className="article" key={i}>
-          <div>
-            <img src={article.urlToImage} alt='img'/>
+            <div>
+              <img src={article.urlToImage} alt="img" />
             </div>
-            <div className='articleInfo'>
-            <h3>{article.title}</h3>
-            <p>{article.description}</p>
-            <a href={article.url}>Read More.</a>
+            <div className="articleInfo">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+              <a href={article.url}>Read More.</a>
             </div>
           </div>
         );
       });
 
+    const illnesses = this.state.illnesses.slice(0, 5).map(illness => {
+      return (
+        <div className="illness">
+          <h3>{illness.name}</h3>
+          <p>{illness.description}</p>
+          <p>{illness.definition}</p>
+        </div>
+      );
+    });
+
     return (
       <div>
         <h1 className="Title">Diagnosed</h1>
-        <div>{articles}</div>
+        <div className='info'>
+          <div className="articles">{articles}</div>
+          <div className="illnesses">{illnesses}</div>
+        </div>
       </div>
     );
   }

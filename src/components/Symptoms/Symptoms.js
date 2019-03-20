@@ -14,6 +14,14 @@ class Symptoms extends Component {
       symptoms: "",
       toggle: false
     };
+
+    this.config = {
+      headers: {
+          "Content-Type": 'application/json',
+          "App-ID": process.env.REACT_APP_API_ID,
+          'App-Key': process.env.REACT_APP_API_KEYS
+      }
+  };
   }
 
   componentDidMount() {
@@ -21,7 +29,7 @@ class Symptoms extends Component {
   }
 
   getSymp = async () => {
-    let res = await axios.get("/api/symptoms");
+    let res = await axios.get('https://api.infermedica.com/v2/symptoms', this.config);
     this.props.updateSymptoms(res.data);
   };
 
@@ -31,18 +39,17 @@ class Symptoms extends Component {
     });
   };
 
-  diagnose = async () => {
-    const { location, symptoms } = this.state;
-    let diagnose = {
-      location,
-      seperateSymp: []
+  symptoms = async () => {
+    let symptoms = {
+      sex: this.props.gender,
+      age: this.props.age,
+      text: this.state.symptoms
     };
-    if (symptoms) {
-      diagnose.seperateSymp = symptoms.split(",");
-    }
+    console.log('symptoms si werkin', symptoms)
     try {
-      let res = await axios.post("/api/symptoms", diagnose);
+      let res = await axios.post('https://api.infermedica.com/v2/parse', symptoms, this.config);
       this.props.updateSymptoms(res.data);
+      console.log('meeeeeerp', res.data)
     } catch (err) {
       console.log(err);
     }
@@ -56,6 +63,7 @@ class Symptoms extends Component {
   // }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         <h2>Symptoms</h2>
@@ -63,10 +71,9 @@ class Symptoms extends Component {
           <div>
             <h3>Are these your symptoms?</h3>
             {this.props.symptoms.map((symptom, i) => {
-              console.log(symptom)
               return (
                 <Symptom
-                  symptom={symptom.symptom}
+                  symptom={symptom.name}
                   id={symptom.id}
                   key={i}
                   handleChange={this.handleChange}
@@ -94,7 +101,6 @@ class Symptoms extends Component {
             </select>
 
             <p>Please list specific symptoms you're experiencing.</p>
-            <p>(Seperate symptoms by using a comma)</p>
 
             <input
               placeholder="Details about symptoms"
@@ -102,7 +108,7 @@ class Symptoms extends Component {
               onChange={e => this.handleChange("symptoms", e.target.value)}
             />
 
-            <button onClick={this.diagnose}>Next</button>
+            <button onClick={this.symptoms}>Next</button>
           </div>
         )}
       </div>
@@ -111,9 +117,11 @@ class Symptoms extends Component {
 }
 
 const mapStateToProps = reduxState => {
-  reduxState = reduxState.symptomsReducer;
+  reduxState = Object.assign({}, reduxState.symptomsReducer, reduxState.authReducer);
   return {
-    symptoms: reduxState.symptoms
+    symptoms: reduxState.symptoms,
+    gender: reduxState.gender,
+    age: reduxState.age
   };
 };
 

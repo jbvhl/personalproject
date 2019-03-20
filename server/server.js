@@ -4,8 +4,7 @@ const express = require('express'),
     massive = require('massive');
 
 //controllers
-const authCtrl = require('./controllers/auth'),
-    sympCtrl = require('./controllers/symptom');
+const authCtrl = require('./controllers/auth');
 
 
 const app = express(),
@@ -37,9 +36,10 @@ app.post(`/auth/register/doctor`, authCtrl.docRegister);
 app.post(`/auth/login`, authCtrl.login);
 app.post(`/auth/logout`, authCtrl.logout);
 
-app.get('/api/symptoms', sympCtrl.getSymp);
-app.post('/api/symptoms', sympCtrl.createSymp);
-app.put('/api/symptoms/:id', sympCtrl.updateSymp);
-app.delete(`/api/symptoms/:symptom`, sympCtrl.deleteSymp);
+app.put('/api/patient/account', authCtrl.updatePatient);
+app.put('/api/doctor/account', authCtrl.updateDoc);
+
+app.delete('/api/patient/account/:email', authCtrl.deletePatient);
+app.delete('/api/doctor/account/:email', authCtrl.deleteDoc)
 
 

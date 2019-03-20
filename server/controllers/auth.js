@@ -34,7 +34,7 @@ module.exports = {
       db = req.app.get("db");
     let takenEmail = await db.auth.checkEmail({ email });
     takenEmail = +takenEmail[0].count;
-    
+
     if (takenEmail !== 0) {
       return res.sendStatus(401);
     }
@@ -52,7 +52,7 @@ module.exports = {
         password: hash
       });
 
-      // console.log('asdf', patient)
+    // console.log('asdf', patient)
 
     patient = patient[0];
 
@@ -122,6 +122,84 @@ module.exports = {
 
   logout: async (req, res) => {
     req.session.destroy();
+    res.sendStatus(200);
+  },
+
+  updateDoc: async (req, res) => {
+    const { firstName, lastName, email, password } = req.body,
+      { session } = req,
+      db = req.app.get("db");
+
+    let salt = bcrypt.genSaltSync(10),
+      hash = bcrypt.hashSync(password, salt),
+      doctor = await db.auth.updateDoc({
+        first_name: firstName,
+        last_name: lastName,
+        email,
+        password: hash
+      });
+
+    doctor = doctor[0];
+
+    session.doctor = doctor;
+
+    res.status(200).send(session.doctor);
+  },
+
+  updatePatient: async (req, res) => {
+    const {
+        firstName,
+        lastName,
+        gender,
+        age,
+        height,
+        weight,
+        email,
+        password
+      } = req.body,
+      { session } = req,
+      db = req.app.get("db");
+    console.log("herpa derpa", req.body);
+    let salt = bcrypt.genSaltSync(10),
+      hash = bcrypt.hashSync(password, salt),
+      patient = await db.auth.updatePatient({
+        first_name: firstName,
+        last_name: lastName,
+        gender,
+        age,
+        height,
+        weight,
+        email,
+        password: hash
+      });
+
+    patient = patient[0];
+
+    session.patient = patient;
+
+    res.status(200).send(session.patient);
+  },
+
+  deleteDoc(req, res) {
+    const { email } = req.session.doctor,
+      db = req.app.get("db");
+
+    doctor = db.auth.deleteDoc({
+      email
+    });
+
+    res.sendStatus(200);
+  },
+
+  deletePatient(req, res) {
+    const { email } = req.session.patient,
+      db = req.app.get("db");
+
+    patient = db.auth.deletePatient({
+      email
+    });
+    console.log('herpa', email)
+
     res.sendStatus(200);
   }
 };
