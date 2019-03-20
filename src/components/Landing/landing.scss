@@ -1,20 +1,25 @@
-.article {
+.info {
+  display: flex;
+  .article {
     display: flex;
     flex-direction: row;
     border: solid;
     align-items: center;
     padding: 2%;
     img {
-        height: 200px;
-        width: auto;
+      height: 200px;
+      width: auto;
     }
     .articleInfo {
-        h3, p {
-            padding: 3%;
-        }
+      h3,
+      p {
+        padding: 3%;
+      }
     }
-}
+  }
 
-.info {
-    display: flex;
+  .illnesses{
+      padding: 11%;
+      border: solid;
+  }
 }
