@@ -70,7 +70,7 @@ class Symptoms extends Component {
         {this.state.toggle ? (
           <div>
             <h3>Are these your symptoms?</h3>
-            {this.props.symptoms.map((symptom, i) => {
+            {this.props.symptoms.mentions.map((symptom, i) => {
               return (
                 <Symptom
                   symptom={symptom.name}

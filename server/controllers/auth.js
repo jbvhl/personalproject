@@ -127,12 +127,13 @@ module.exports = {
 
   updateDoc: async (req, res) => {
     const { firstName, lastName, email, password } = req.body,
-      { session } = req,
+      { id } = req.session.doctor,
       db = req.app.get("db");
 
     let salt = bcrypt.genSaltSync(10),
       hash = bcrypt.hashSync(password, salt),
       doctor = await db.auth.updateDoc({
+        id,
         first_name: firstName,
         last_name: lastName,
         email,
@@ -157,12 +158,13 @@ module.exports = {
         email,
         password
       } = req.body,
-      { session } = req,
+      { id } = req.session.patient,
       db = req.app.get("db");
     console.log("herpa derpa", req.body);
     let salt = bcrypt.genSaltSync(10),
       hash = bcrypt.hashSync(password, salt),
       patient = await db.auth.updatePatient({
+        id,
         first_name: firstName,
         last_name: lastName,
         gender,
@@ -184,7 +186,7 @@ module.exports = {
     const { email } = req.session.doctor,
       db = req.app.get("db");
 
-    doctor = db.auth.deleteDoc({
+    db.auth.deleteDoc({
       email
     });
 
@@ -192,13 +194,12 @@ module.exports = {
   },
 
   deletePatient(req, res) {
-    const { email } = req.session.patient,
-      db = req.app.get("db");
+    const db = req.app.get("db"),
+      { email } = req.session.patient;
 
-    patient = db.auth.deletePatient({
+    db.auth.deletePatient({
       email
     });
-    console.log('herpa', email)
 
     res.sendStatus(200);
   }

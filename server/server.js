@@ -39,7 +39,7 @@ app.post(`/auth/logout`, authCtrl.logout);
 app.put('/api/patient/account', authCtrl.updatePatient);
 app.put('/api/doctor/account', authCtrl.updateDoc);
 
-app.delete('/api/patient/account/:email', authCtrl.deletePatient);
-app.delete('/api/doctor/account/:email', authCtrl.deleteDoc)
+app.delete('/api/patient/account', authCtrl.deletePatient);
+app.delete('/api/doctor/account', authCtrl.deleteDoc)
 
 
