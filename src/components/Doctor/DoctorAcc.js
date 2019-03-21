@@ -9,14 +9,33 @@ class DoctorAcc extends Component {
         super(props);
     
         this.state = {
-          firstName: this.props.firstName,
-          lastName: this.props.lastName,
-          email: this.props.email,
+          firstName: this.props.dFirstName,
+          lastName: this.props.dLastName,
+          email: this.props.dEmail,
           password: "",
-          confirmPassword: ""
+          confirmPassword: "",
+          editToggle: false,
+      updateToggle: false
         };
 
         this.deleteAcc = this.deleteAcc.bind(this);
+        this.handleEditToggle = this.handleEditToggle.bind(this);
+    this.handleUpdateToggle = this.handleUpdateToggle.bind(this);
+      }
+
+      handleEditToggle() {
+        this.setState({
+          editToggle: !this.state.editToggle,
+          firstName: this.props.dFirstName,
+          lastName: this.props.dLastName,
+          email: this.props.dEmail
+        });
+      }
+
+      handleUpdateToggle() {
+        this.setState({
+          updateToggle: !this.state.updateToggle
+        });
       }
 
       handleChange(props, val) {
@@ -60,44 +79,67 @@ class DoctorAcc extends Component {
             password,
             confirmPassword
           } = this.state;
+
         return (
             <div>
+            {this.state.editToggle ? (
+          <div>
+            {!this.state.updateToggle ? <React.Fragment> <input
+              placeholder="First Name"
+              value={firstName}
+              onChange={e => this.handleChange("firstName", e.target.value)}
+            />
+
+            <input
+              placeholder="Last Name"
+              value={lastName}
+              onChange={e => this.handleChange("lastName", e.target.value)}
+            />
+
+            <input
+              placeholder="Email"
+              value={email}
+              onChange={e => this.handleChange("email", e.target.value)}
+            />
+            <button onClick={this.handleUpdateToggle}>Update</button>
+            <button onClick={this.handleEditToggle}>Cancel</button>
+             </React.Fragment>: null }
+
+            {this.state.updateToggle ? (
+              <div>
                 <input
-          placeholder="First Name"
-          value={firstName}
-          onChange={e => this.handleChange("firstName", e.target.value)}
-        />
+                  placeholder="Password"
+                  type="password"
+                  value={password}
+                  onChange={e => this.handleChange("password", e.target.value)}
+                />
 
-        <input
-          placeholder="Last Name"
-          value={lastName}
-          onChange={e => this.handleChange("lastName", e.target.value)}
-        />
-
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={e => this.handleChange("email", e.target.value)}
-        />
-
-        <input
-          placeholder="Password"
-          type="password"
-          value={password}
-          onChange={e => this.handleChange("password", e.target.value)}
-        />
-
-        <input
-          placeholder="Confirm Password"
-          type="password"
-          value={confirmPassword}
-          onChange={e => this.handleChange("confirmPassword", e.target.value)}
-        />
-
-        <button onClick={this.update}>Update</button>
-        <button onClick={this.deleteAcc}>Delete Account</button>
+                <input
+                  placeholder="Confirm Password"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={e =>
+                    this.handleChange("confirmPassword", e.target.value)
+                  }
+                />
+                <button onClick={this.update}>Confirm</button>
+                <button onClick={this.handleUpdateToggle}>Cancel</button>
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <div>
+            <div>
+              <h3>Name:</h3>
+              {firstName} {lastName}
+              <h3>Email:</h3> {email}
             </div>
-        )
+            <button onClick={this.handleEditToggle}>Edit</button>
+            <button onClick={this.deleteAcc}>Delete Account</button>
+          </div>
+        )}
+        </div>
+        );
     }
 }
 
