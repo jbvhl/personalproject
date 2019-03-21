@@ -6,6 +6,8 @@ import PatientReg from './components/Register/PatientReg'
 import DoctorReg from './components/Register/DoctorReg'
 import Patient from './components/Patient/Patient';
 import Doctor from './components/Doctor/Doctor';
+import PatientAcc from './components/Patient/PatientAcc';
+import DoctorAcc from './components/Doctor/DoctorAcc';
 
 export default (
     <Switch>
@@ -15,6 +17,8 @@ export default (
         <Route path='/register/doctorreg' component={DoctorReg}/>
         <Route path='/patient' component={Patient}/>
         <Route path='/doctor' component={Doctor}/>
+        <Route exact path='/patient/account' component={PatientAcc}/>
+        <Route exact path='/doctor/account' component={DoctorAcc}/>
     </Switch>
 
 )

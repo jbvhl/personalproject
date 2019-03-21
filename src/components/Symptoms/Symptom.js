@@ -27,20 +27,18 @@ class Symptom extends Component {
   }
 
 
-  deleteSymp = () => {
+  removeSymp = () => {
     const { symptom } = this.props;
-    axios.delete(`/api/symptoms/${symptom}`).then(res => {
-      console.log(res);
-    });
+    
     this.setState({
       deleteToggle: true
     });
   };
 
   updateSymp = async () => {
-    const { id } = this.props;
-    axios.put(`/api/symptoms/${id}`, {symptom:this.state.symptom}).then(res => {
-      console.log(res)
+    axios.post(
+      "https://api.infermedica.com/v2/parse", {symptom: this.state.symptom}, this.config).then(res => {
+      console.log('womp', res)
     })
     this.setState({
       saveToggle: !this.state.saveToggle,
@@ -68,7 +66,7 @@ class Symptom extends Component {
               <div>
                 <ul>{this.state.symptom}</ul>
                 <button onClick={this.handleEditToggle}>Edit</button>
-                  <button onClick={this.deleteSymp}>Delete</button>
+                  <button onClick={this.removeSymp}>Remove</button>
               </div>
             )}
           </div>

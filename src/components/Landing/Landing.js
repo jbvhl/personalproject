@@ -10,15 +10,16 @@ class Landing extends Component {
       articles: [],
       illnesses: []
     };
+
   }
 
-  componentDidMount() {
-    this.getArticles();
-    this.getIllnesses();
+  componentDidMount = async () => {
+    await this.getArticles();
+    await this.getIllnesses();
   }
 
-  getArticles = async () => {
-    await axios
+  getArticles() {
+    axios
       .get(
         `https://newsapi.org/v2/top-headlines?category=health&apiKey=${
           process.env.REACT_APP_apiKey
@@ -31,8 +32,8 @@ class Landing extends Component {
       });
   };
 
-  getIllnesses = async () => {
-    await axios
+  getIllnesses()  {
+     axios
       .get(
         `https://mobilesvc.sickweather.com/ws/v2.0/illnesses/getIllnesses.php?api_key=fnw86kvhyt4yfgj4hmjxtqbk5anczmne`
       )
@@ -64,9 +65,9 @@ class Landing extends Component {
         );
       });
 
-    const illnesses = this.state.illnesses.slice(0, 5).map(illness => {
+    const illnesses = this.state.illnesses.slice(0, 5).map((illness, i) => {
       return (
-        <div className="illness">
+        <div className="illness" key={i}>
           <h3>{illness.name}</h3>
           <p>{illness.description}</p>
           <p>{illness.definition}</p>

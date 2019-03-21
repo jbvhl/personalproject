@@ -15,9 +15,6 @@ class Register extends Component {
                 <Link to='/register/doctorreg'>
                     <button>I am a Doctor</button>
                 </Link>
-
-                    
-                
             </div>
         )
     }

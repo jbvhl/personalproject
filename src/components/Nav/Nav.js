@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { updatePatient, clearPatient, updateDoctor, clearDoctor } from "../../ducks/authReducer";
+import {
+  updatePatient,
+  clearPatient,
+  updateDoctor,
+  clearDoctor
+} from "../../ducks/authReducer";
 import { connect } from "react-redux";
 import "./nav.scss";
 
@@ -30,16 +35,16 @@ class Nav extends Component {
       let res = await axios.post(`/auth/login`, user);
       // console.log(res.data);
       if (res.data.patient) {
-        this.props.updatePatient(res.data)
-        this.props.history.push('/patient')
+        this.props.updatePatient(res.data);
+        this.props.history.push("/patient");
       } else {
-        this.props.updateDoctor(res.data.doctor)
+        this.props.updateDoctor(res.data.doctor);
         // console.log('meep', res.data);
-        this.props.history.push('/doctor')
+        this.props.history.push("/doctor");
       }
     } catch (err) {
-      console.log(err)
-      alert('Wrong email/password.');
+      console.log(err);
+      alert("Wrong email/password.");
     }
     this.setState({
       email: "",
@@ -56,55 +61,71 @@ class Nav extends Component {
 
   render() {
     const { email, password } = this.state;
-    if (this.props.location.pathname !== '/' && !this.props.id && !this.props.dId) {
-      return null
+    if (
+      this.props.location.pathname !== "/" &&
+      !this.props.id &&
+      !this.props.dId
+    ) {
+      return null;
     }
     // console.log('merpin', this.props.id, this.props.dId)
-    
-      return (
-        <div>
-          {this.props.id || this.props.dId ? (
-            <div>
-              <Link to="/">
-                <button>Home</button>
-              </Link>
 
-              {this.props.dId ? <Link to="/doctor" >
-                <button>My Profile</button>
-              </Link> : 
-              <Link to="/patient" >
-                <button>My Profile</button>
-              </Link>
-              }
+    return (
+      <div>
+        {this.props.id || this.props.dId ? (
+          <div>
+            <Link to="/">
+              <button>Home</button>
+            </Link>
 
-              <button onClick={this.logout}>Logout</button>
-            </div> 
-          ) : (
-            <div>
-              {" "}
-              <input
-                type="text"
-                placeholder="email"
-                value={email}
-                onChange={e => this.handleChange("email", e.target.value)}
-              />
-              <input
-                type="password"
-                placeholder="password"
-                value={password}
-                onChange={e => this.handleChange("password", e.target.value)}
-              />
-              <button onClick={this.login}>Login</button>
-              <Link to="/register/home">Register</Link>{" "}
-            </div>
-          )} 
-        </div>
-      )
+            {this.props.dId ? (
+              <div>
+                <Link to="/doctor">
+                  <button>My Profile</button>
+                </Link>
+                <Link to="/doctor/account">
+                  <button>My Account</button>
+                </Link>{" "}
+              </div>
+            ) : (
+              <div>
+                <Link to="/patient">
+                  <button>My Profile</button>
+                </Link>
+                {/* <Link to="/patient/account">
+                  <button>My Account</button>
+                </Link> */}
+              </div>
+            )}
+
+            <button onClick={this.logout}>Logout</button>
+          </div>
+        ) : (
+          <div>
+            {" "}
+            <input
+              type="text"
+              placeholder="email"
+              value={email}
+              onChange={e => this.handleChange("email", e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={e => this.handleChange("password", e.target.value)}
+            />
+            <button onClick={this.login}>Login</button>
+            <Link to="/register/home">Register</Link>{" "}
+          </div>
+        )}
+      </div>
+    );
   }
 }
 
 const mapStateToProps = reduxState => {
-  reduxState = reduxState.authReducer
+  reduxState = reduxState.authReducer;
   return {
     id: reduxState.id,
     dId: reduxState.dId
