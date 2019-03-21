@@ -161,7 +161,7 @@ module.exports = {
       } = req.body,
       { id } = req.session.patient,
       db = req.app.get("db");
-    console.log('heerpa', req.body);
+    // console.log('heerpa', req.body);
     // console.log("herpa derpa", id);
     let salt = bcrypt.genSaltSync(10),
       hash = bcrypt.hashSync(password, salt),

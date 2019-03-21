@@ -58,7 +58,7 @@ export default function reducer(state = initialState, action) {
         weight,
         email
       } = payload;
-      // console.log('this is id', id)
+      // console.log('this is payload', payload)
       return {
         ...state,
         id,
