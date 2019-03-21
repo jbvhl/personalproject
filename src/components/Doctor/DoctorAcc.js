@@ -9,12 +9,14 @@ class DoctorAcc extends Component {
         super(props);
     
         this.state = {
-          firstName: "",
-          lastName: "",
-          email: "",
+          firstName: this.props.firstName,
+          lastName: this.props.lastName,
+          email: this.props.email,
           password: "",
           confirmPassword: ""
         };
+
+        this.deleteAcc = this.deleteAcc.bind(this);
       }
 
       handleChange(props, val) {
@@ -43,6 +45,12 @@ class DoctorAcc extends Component {
           alert("Email already exists");
         }
       };
+
+      async deleteAcc() {
+        let res = await axios.delete("/api/doctor/account", this.props.dId);
+        this.props.updateDoctor(res.data);
+        this.props.history.push('/');
+        }
 
     render() {
         const {
@@ -87,6 +95,7 @@ class DoctorAcc extends Component {
         />
 
         <button onClick={this.update}>Update</button>
+        <button onClick={this.deleteAcc}>Delete Account</button>
             </div>
         )
     }

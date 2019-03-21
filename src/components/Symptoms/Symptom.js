@@ -36,7 +36,7 @@ class Symptom extends Component {
   };
 
   updateSymp = async () => {
-    axios.post(
+    await axios.post(
       "https://api.infermedica.com/v2/parse", {symptom: this.state.symptom}, this.config).then(res => {
       console.log('womp', res)
     })

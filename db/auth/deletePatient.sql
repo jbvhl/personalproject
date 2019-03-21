@@ -1,3 +1,3 @@
 delete
 from patient
-where email = ${email};
+where id = ${id}

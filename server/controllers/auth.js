@@ -104,7 +104,8 @@ module.exports = {
       if (authPatient) {
         delete patient.password;
         session.patient = patient;
-        return res.status(200).send({ patient: session.patient });
+        // console.log('sessioning', req.session)
+        return res.status(200).send({patient: session.patient});
       } else {
         return res.sendStatus(401);
       }
@@ -142,9 +143,9 @@ module.exports = {
 
     doctor = doctor[0];
 
-    session.doctor = doctor;
+    req.session.doctor = doctor;
 
-    res.status(200).send(session.doctor);
+    res.status(200).send(req.session.doctor);
   },
 
   updatePatient: async (req, res) => {
@@ -160,7 +161,8 @@ module.exports = {
       } = req.body,
       { id } = req.session.patient,
       db = req.app.get("db");
-    console.log("herpa derpa", req.body);
+    console.log('heerpa', req.body);
+    // console.log("herpa derpa", id);
     let salt = bcrypt.genSaltSync(10),
       hash = bcrypt.hashSync(password, salt),
       patient = await db.auth.updatePatient({
@@ -177,17 +179,17 @@ module.exports = {
 
     patient = patient[0];
 
-    session.patient = patient;
+    req.session.patient = patient;
 
-    res.status(200).send(session.patient);
+    res.status(200).send(req.session.patient);
   },
 
   deleteDoc(req, res) {
-    const { email } = req.session.doctor,
+    const { id } = req.session.doctor,
       db = req.app.get("db");
 
     db.auth.deleteDoc({
-      email
+      id
     });
 
     res.sendStatus(200);
@@ -195,10 +197,10 @@ module.exports = {
 
   deletePatient(req, res) {
     const db = req.app.get("db"),
-      { email } = req.session.patient;
+      { id } = req.session.patient;
 
     db.auth.deletePatient({
-      email
+      id
     });
 
     res.sendStatus(200);

@@ -76,7 +76,7 @@ class Symptoms extends Component {
   // }
 
   render() {
-    console.log('beep boop', this.props);
+    // console.log('beep boop', this.props);
     return (
       <div>
         <h2>Symptoms</h2>

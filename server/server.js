@@ -13,8 +13,8 @@ const app = express(),
 app.use(express.json());
 app.use(session({
     secret: SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     cookie: {
         maxAge: 82364213
     }

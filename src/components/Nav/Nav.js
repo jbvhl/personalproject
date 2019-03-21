@@ -69,7 +69,6 @@ class Nav extends Component {
       return null;
     }
     // console.log('merpin', this.props.id, this.props.dId)
-
     return (
       <div>
         {this.props.id || this.props.dId ? (
@@ -77,7 +76,6 @@ class Nav extends Component {
             <Link to="/">
               <button>Home</button>
             </Link>
-
             {this.props.dId ? (
               <div>
                 <Link to="/doctor">
@@ -92,9 +90,9 @@ class Nav extends Component {
                 <Link to="/patient">
                   <button>My Profile</button>
                 </Link>
-                {/* <Link to="/patient/account">
+                <Link to="/patient/account">
                   <button>My Account</button>
-                </Link> */}
+                </Link>
               </div>
             )}
 

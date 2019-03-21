@@ -15,10 +15,10 @@ export default (
         <Route path='/register/home' component={Register} />
         <Route path='/register/patientreg' component={PatientReg}/>
         <Route path='/register/doctorreg' component={DoctorReg}/>
+        <Route path='/patient/account' component={PatientAcc}/>
+        <Route path='/doctor/account' component={DoctorAcc}/>
         <Route path='/patient' component={Patient}/>
         <Route path='/doctor' component={Doctor}/>
-        <Route exact path='/patient/account' component={PatientAcc}/>
-        <Route exact path='/doctor/account' component={DoctorAcc}/>
     </Switch>
 
 )
