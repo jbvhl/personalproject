@@ -10,7 +10,8 @@ class Symptoms extends Component {
     super(props);
 
     this.state = {
-      symptoms: "",
+      symptoms: '',
+      conditions: [],
       toggle: false
     };
 
@@ -58,54 +59,57 @@ class Symptoms extends Component {
       age: this.props.age,
       text: this.state.symptoms
     };
-    console.log("symptoms si werkin", symptoms);
+    // console.log("symptoms si werkin", symptoms);
     try {
       let res = await axios.post(
         "https://api.infermedica.com/v2/parse",
         symptoms,
         this.config
       );
-      this.props.updateSymptoms(res.data);
-      console.log("meeeeeerp", res.data);
+      this.props.updateSymptoms(res.data.mentions);
+      // console.log("meeeeeerp", res.data.mentions);
+      this.setState({
+        toggle: true,
+        symptoms: res.data.mentions
+      });
     } catch (err) {
       console.log(err);
     }
-    this.setState({
-      toggle: true
-    });
   };
-
-  // diagnoseMe = async () => {
-  //   let diagnose = {
-  //     sex: this.props.gender,
-  //     age: this.props.age,
-  //     evidence: [{
-  //       id: this.props.symptom.id,
-  //       choice_id: this.props.symptom.choice_id
-  //     }]
-  //   };
-  //   let res = await axios.post('https://api.infermedica.com/v2/diagnosis', diagnose, this.config);
-  //   this.updateConditions
-  // }
+  
+diagnoseMe = async () => {
+    let diagnose = {
+      sex: this.props.gender,
+      age: this.props.age,
+      evidence: [{
+        id: this.props.symptom.id,
+        choice_id: this.props.symptom.choice_id
+      }]
+    };
+    let res = await axios.post('https://api.infermedica.com/v2/diagnosis', diagnose, this.config);
+    this.props.updateConditions(res.data);
+    console.log('haaaaarpa', res.data)
+  }
 
   render() {
-    // console.log('beep boop', this.props);
+    // console.log('meeeeeeeeeeeeeeeeep',this.state.symptoms)
     return (
       <div>
         <h2>Symptoms</h2>
         {this.state.toggle ? (
           <div>
             <h3>Are these your symptoms?</h3>
-            {this.props.symptoms.mentions.map((symptom, i) => {
+            {this.state.symptoms.map((symptom, i) => {
               return (
                 <Symptom
+                symptomObj={symptom}
                   symptom={symptom.name}
                   id={symptom.id}
                   choiceID={symptom.choice_id}
                   key={i}
                   handleChange={this.handleChange}
                   config={this.config}
-                  symptoms={this.props.symptoms.mentions}
+                  symptoms={this.props.symptoms}
                   update={this.props.updateSymptoms}
                 />
               );
