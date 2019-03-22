@@ -64,8 +64,8 @@ class Symptom extends Component {
   };
 
   render() {
-    console.log("sadfasdf", this.state.symptom, this.state.sympObj);
-    console.log("sympssss", this.state.symptoms);
+    // console.log("sadfasdf", this.state.symptom, this.state.sympObj);
+    // console.log("sympssss", this.state.symptoms);
     return (
       <div>
         {this.state.editToggle ? (

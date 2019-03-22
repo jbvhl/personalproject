@@ -10,9 +10,10 @@ class Symptoms extends Component {
     super(props);
 
     this.state = {
-      symptoms: '',
+      symptoms: "",
       conditions: [],
-      toggle: false
+      toggle: false,
+      diagnoseToggle: false
     };
 
     this.config = {
@@ -35,16 +36,16 @@ class Symptoms extends Component {
       this.config
     );
     this.props.updateSymptoms(res.data);
-    console.log('gettin symptommmms', res.data)
+    console.log("gettin symptommmms", res.data);
   };
-  
+
   getConditions = async () => {
     let res = await axios.get(
       "https://api.infermedica.com/v2/conditions",
       this.config
     );
     this.props.updateConditions(res.data);
-    console.log('gettin conditionss', res.data)
+    console.log("gettin conditionss", res.data);
   };
 
   handleChange = (prop, val) => {
@@ -76,57 +77,81 @@ class Symptoms extends Component {
       console.log(err);
     }
   };
-  
-diagnoseMe = async () => {
+
+  diagnoseMe = async () => {
     let diagnose = {
       sex: this.props.gender,
       age: this.props.age,
-      evidence: [{
-        id: this.props.symptom.id,
-        choice_id: this.props.symptom.choice_id
-      }]
+      evidence: []
     };
-    let res = await axios.post('https://api.infermedica.com/v2/diagnosis', diagnose, this.config);
-    this.props.updateConditions(res.data);
-    console.log('haaaaarpa', res.data)
-  }
+    diagnose.evidence = this.state.symptoms.map(symptom => {
+      console.log("asdf", symptom);
+      return {
+        id: symptom.id,
+        choice_id: symptom.choice_id
+      };
+    });
+    console.log(diagnose);
+    let res = await axios.post(
+      "https://api.infermedica.com/v2/diagnosis",
+      diagnose,
+      this.config
+    );
+    this.props.updateConditions(res.data.conditions);
+    console.log("haaaaarpa", res.data.conditions);
+    this.setState({
+      diagnoseToggle: true,
+      conditions: res.data.conditions
+    });
+  };
 
   render() {
-    // console.log('meeeeeeeeeeeeeeeeep',this.state.symptoms)
+    console.log("meeeeeeeeeeeeeeeeep", this.state.symptoms);
     return (
       <div>
-        <h2>Symptoms</h2>
-        {this.state.toggle ? (
+        {this.state.diagnoseToggle ? (
           <div>
-            <h3>Are these your symptoms?</h3>
-            {this.state.symptoms.map((symptom, i) => {
-              return (
-                <Symptom
-                symptomObj={symptom}
-                  symptom={symptom.name}
-                  id={symptom.id}
-                  choiceID={symptom.choice_id}
-                  key={i}
-                  handleChange={this.handleChange}
-                  config={this.config}
-                  symptoms={this.props.symptoms}
-                  update={this.props.updateSymptoms}
-                />
-              );
+            <h2>Possible Conditions</h2>
+            {this.state.conditions.map(condition => {
+              return <h3>{condition.common_name}</h3>;
             })}
-            <button onClick={this.diagnoseMe}>Yes, diagnose me.</button>
           </div>
         ) : (
           <div>
-            <p>Please list symptoms you're experiencing.</p>
+            <h2>Symptoms</h2>
+            {this.state.toggle ? (
+              <div>
+                <h3>Are these your symptoms?</h3>
+                {this.state.symptoms.map((symptom, i) => {
+                  return (
+                    <Symptom
+                      symptomObj={symptom}
+                      symptom={symptom.name}
+                      id={symptom.id}
+                      choiceID={symptom.choice_id}
+                      key={i}
+                      handleChange={this.handleChange}
+                      config={this.config}
+                      symptoms={this.props.symptoms}
+                      update={this.props.updateSymptoms}
+                    />
+                  );
+                })}
+                <button onClick={this.diagnoseMe}>Yes, diagnose me.</button>
+              </div>
+            ) : (
+              <div>
+                <p>Please list symptoms you're experiencing.</p>
 
-            <input
-              placeholder="Details about symptoms"
-              value={this.state.symptoms}
-              onChange={e => this.handleChange("symptoms", e.target.value)}
-            />
+                <input
+                  placeholder="Details about symptoms"
+                  value={this.state.symptoms}
+                  onChange={e => this.handleChange("symptoms", e.target.value)}
+                />
 
-            <button onClick={this.symptoms}>Next</button>
+                <button onClick={this.symptoms}>Next</button>
+              </div>
+            )}
           </div>
         )}
       </div>
