@@ -36,7 +36,6 @@ class Symptoms extends Component {
       this.config
     );
     this.props.updateSymptoms(res.data);
-    console.log("gettin symptommmms", res.data);
   };
 
   getConditions = async () => {
@@ -45,7 +44,6 @@ class Symptoms extends Component {
       this.config
     );
     this.props.updateConditions(res.data);
-    console.log("gettin conditionss", res.data);
   };
 
   handleChange = (prop, val) => {
@@ -85,20 +83,17 @@ class Symptoms extends Component {
       evidence: []
     };
     diagnose.evidence = this.state.symptoms.map(symptom => {
-      console.log("asdf", symptom);
       return {
         id: symptom.id,
         choice_id: symptom.choice_id
       };
     });
-    console.log(diagnose);
     let res = await axios.post(
       "https://api.infermedica.com/v2/diagnosis",
       diagnose,
       this.config
     );
     this.props.updateConditions(res.data.conditions);
-    console.log("haaaaarpa", res.data.conditions);
     this.setState({
       diagnoseToggle: true,
       conditions: res.data.conditions
@@ -106,7 +101,6 @@ class Symptoms extends Component {
   };
 
   render() {
-    console.log("meeeeeeeeeeeeeeeeep", this.state.symptoms);
     return (
       <div>
         {this.state.diagnoseToggle ? (
