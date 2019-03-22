@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./symptoms.scss";
 import axios from "axios";
-import { updateSymptoms } from "../../ducks/symptomsReducer";
+import { updateSymptoms, updateConditions } from "../../ducks/symptomsReducer";
 import { connect } from "react-redux";
 import Symptom from "./Symptom";
 
@@ -10,7 +10,6 @@ class Symptoms extends Component {
     super(props);
 
     this.state = {
-      location: "",
       symptoms: "",
       toggle: false
     };
@@ -26,6 +25,7 @@ class Symptoms extends Component {
 
   componentDidMount() {
     this.getSymp();
+    this.getConditions();
   }
 
   getSymp = async () => {
@@ -34,6 +34,16 @@ class Symptoms extends Component {
       this.config
     );
     this.props.updateSymptoms(res.data);
+    console.log('gettin symptommmms', res.data)
+  };
+  
+  getConditions = async () => {
+    let res = await axios.get(
+      "https://api.infermedica.com/v2/conditions",
+      this.config
+    );
+    this.props.updateConditions(res.data);
+    console.log('gettin conditionss', res.data)
   };
 
   handleChange = (prop, val) => {
@@ -70,9 +80,12 @@ class Symptoms extends Component {
   //     sex: this.props.gender,
   //     age: this.props.age,
   //     evidence: [{
-  //       id: symptom.id
+  //       id: this.props.symptom.id,
+  //       choice_id: this.props.symptom.choice_id
   //     }]
   //   };
+  //   let res = await axios.post('https://api.infermedica.com/v2/diagnosis', diagnose, this.config);
+  //   this.updateConditions
   // }
 
   render() {
@@ -88,9 +101,12 @@ class Symptoms extends Component {
                 <Symptom
                   symptom={symptom.name}
                   id={symptom.id}
+                  choiceID={symptom.choice_id}
                   key={i}
                   handleChange={this.handleChange}
                   config={this.config}
+                  symptoms={this.props.symptoms.mentions}
+                  update={this.props.updateSymptoms}
                 />
               );
             })}
@@ -122,13 +138,15 @@ const mapStateToProps = reduxState => {
   );
   return {
     symptoms: reduxState.symptoms,
+    conditions: reduxState.conditions,
     gender: reduxState.gender,
     age: reduxState.age
   };
 };
 
 const mapDispatchToProps = {
-  updateSymptoms
+  updateSymptoms,
+  updateConditions
 };
 
 export default connect(

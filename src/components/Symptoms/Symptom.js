@@ -9,7 +9,8 @@ class Symptom extends Component {
       editToggle: false,
       deleteToggle: false,
       saveToggle: false,
-      symptom: this.props.symptom
+      symptom: this.props.symptom,
+      symptoms: this.props.symptoms
     };
     this.handleEditToggle = this.handleEditToggle.bind(this);
   }
@@ -26,20 +27,30 @@ class Symptom extends Component {
     });
   }
 
+//   removeSymp = () => {
+//     this.state.symptoms.map((symptom, i) => {
+//       if (symptom.name === this.state.symptom) {
+//         this.state.symptoms.splice(i, 1)
+//         this.props.update(this.state.symptoms)
+//       }
+//   })
 
-  removeSymp = () => {
-    const { symptom } = this.props;
-    
-    this.setState({
-      deleteToggle: true
-    });
-  };
+//     this.setState({
+//       deleteToggle: true,
+//       symptoms: this.state.symptoms
+//   })
+// }
 
   updateSymp = async () => {
-    await axios.post(
-      "https://api.infermedica.com/v2/parse", {symptom: this.state.symptom}, this.config).then(res => {
-      console.log('womp', res)
-    })
+    await axios
+      .post(
+        "https://api.infermedica.com/v2/parse",
+        { symptom: this.state.symptom },
+        this.config
+      )
+      .then(res => {
+        console.log("womp", res);
+      });
     this.setState({
       saveToggle: !this.state.saveToggle,
       editToggle: !this.state.editToggle
@@ -54,19 +65,19 @@ class Symptom extends Component {
             <input
               type="text"
               value={this.state.symptom}
-              onChange={e => this.handleChange('symptom', e.target.value)}
+              onChange={e => this.handleChange("symptom", e.target.value)}
             />
             <button onClick={this.updateSymp}>Save</button>
           </div>
         ) : (
           <div>
             {this.state.deleteToggle ? (
-              <p>Deleted</p>
+              null
             ) : (
               <div>
                 <ul>{this.state.symptom}</ul>
                 <button onClick={this.handleEditToggle}>Edit</button>
-                  <button onClick={this.removeSymp}>Remove</button>
+                <button onClick={this.removeSymp}>Remove</button>
               </div>
             )}
           </div>
