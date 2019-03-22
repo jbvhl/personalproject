@@ -114,7 +114,7 @@ diagnoseMe = async () => {
                 />
               );
             })}
-            <button>Yes, diagnose me.</button>
+            <button onClick={this.diagnoseMe}>Yes, diagnose me.</button>
           </div>
         ) : (
           <div>

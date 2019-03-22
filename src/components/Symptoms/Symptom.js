@@ -10,7 +10,7 @@ class Symptom extends Component {
       deleteToggle: false,
       saveToggle: false,
       symptom: this.props.symptom,
-      updateSymp: this.props.symptomObj,
+      sympObj: this.props.symptomObj,
       symptoms: this.props.symptoms
     };
     this.handleEditToggle = this.handleEditToggle.bind(this);
@@ -35,7 +35,7 @@ class Symptom extends Component {
         this.props.update(this.state.symptoms);
       }
     });
-    console.log("removed", this.state.symptoms);
+    // console.log("removed", this.state.symptoms);
     this.setState({
       deleteToggle: true,
       symptoms: this.state.symptoms
@@ -48,24 +48,23 @@ class Symptom extends Component {
       { text: this.state.symptom },
       this.props.config
     );
-    console.log("pandas", res.data.mentions, this.state.updateSymp);
-    this.state.symptoms.map(symptom => {
-      console.log("hooooes", res.data.mentions[0], symptom);
-      if ( this.state.symptom !== symptom.name) {
-        this.state.symptoms.splice(symptom, 1, res.data.mentions[0]);
-        this.props.update(this.state.symptoms);
+    for(let i = this.state.symptoms.length -1; i>-1; i--){
+      if(this.state.symptoms[i].name === this.props.symptom){
+        this.state.symptoms.splice(i, 1)
+        this.state.symptoms.push(res.data.mentions[0])
       }
-    });
-    console.log("updating", this.state.symptoms);
+    }
+    this.props.update(this.state.symptoms);
     this.setState({
       saveToggle: !this.state.saveToggle,
       editToggle: !this.state.editToggle,
-      symptoms: this.state.symptoms
+      symptoms: this.state.symptoms,
+      sympObj: res.data.mentions[0]
     });
   };
 
   render() {
-    console.log("sadfasdf", this.state.symptom, this.state.updateSymp);
+    console.log("sadfasdf", this.state.symptom, this.state.sympObj);
     console.log("sympssss", this.state.symptoms);
     return (
       <div>
