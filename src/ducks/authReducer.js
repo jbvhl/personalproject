@@ -10,13 +10,16 @@ const initialState = {
   height: 0,
   weight: 0,
   email: "",
-  dEmail: ''
+  dEmail: '',
+  patients: []
 };
 
 const UPDATE_PATIENT = "UPDATE_PATIENT";
 const CLEAR_PATIENT = "CLEAR_PATIENT";
 const UPDATE_DOCTOR = "UPDATE_DOCTOR";
 const CLEAR_DOCTOR = "CLEAR_DOCTOR";
+const UPDATE_PATIENTS = 'UPDATE_PATIENTS';
+const CLEAR_PATIENTS = 'CLEAR_PATIENTS'
 
 export function updatePatient(patient) {
   return {
@@ -41,6 +44,19 @@ export function updateDoctor(doctor) {
 export function clearDoctor() {
   return {
     type: CLEAR_DOCTOR
+  };
+}
+
+export function updatePatients(patients) {
+  return {
+    type: UPDATE_PATIENTS,
+    payload: patients
+  }
+}
+
+export function clearPatients() {
+  return {
+    type: CLEAR_PATIENTS
   };
 }
 
@@ -100,6 +116,12 @@ export default function reducer(state = initialState, action) {
         dLastName: "",
         dEmail: ""
       };
+      case UPDATE_PATIENTS:
+      const patients = payload;
+      return {...state, patients}
+
+      case CLEAR_PATIENTS:
+      return {...state, patients: []}
 
     default:
       return state;

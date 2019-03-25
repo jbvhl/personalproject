@@ -70,7 +70,7 @@ class Nav extends Component {
     }
     // console.log('merpin', this.props.id, this.props.dId)
     return (
-      <div>
+      <div className='nav'>
         {this.props.id || this.props.dId ? (
           <div>
             <Link to="/">

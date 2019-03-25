@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express'),
     session = require('express-session'),
-    massive = require('massive');
+    massive = require('massive'); 
 
 //controllers
 const authCtrl = require('./controllers/auth');
@@ -29,6 +29,7 @@ massive(CONNECTION_STRING).then(db => {
 //endpoints
 app.get(`/api/patient`, authCtrl.getPatient);
 app.get(`/api/doctor`, authCtrl.getDoctor);
+app.get(`/api/patients`, authCtrl.getPatients);
 
 
 app.post(`/auth/register`, authCtrl.register);

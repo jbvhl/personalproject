@@ -8,7 +8,8 @@ class Landing extends Component {
 
     this.state = {
       articles: [],
-      illnesses: []
+      illnesses: [],
+      search: ''
     };
 
   }
@@ -44,6 +45,12 @@ class Landing extends Component {
       });
   };
 
+  handleChange = (prop, val) => {
+    this.setState({
+      [prop]: val
+    });
+  };
+
   render() {
     const articles = this.state.articles
       .filter((article, i, arr) => {
@@ -77,11 +84,15 @@ class Landing extends Component {
 
     return (
       <div>
-        <h1 className="Title">Diagnosed</h1>
+        <h1 className="title">Diagnosed</h1>
+        <input placeholder='Search'/>
+        <button>Search</button>
+      <div className='landing'>
         <div className='info'>
           <div className="articles">{articles}</div>
           <div className="illnesses">{illnesses}</div>
         </div>
+      </div>
       </div>
     );
   }
