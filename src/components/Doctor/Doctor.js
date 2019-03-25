@@ -3,14 +3,25 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { updateDoctor, updatePatient } from "../../ducks/authReducer";
 import "./doctor.scss";
-import {Pie} from 'chart.js'
+import {Pie} from 'react-chartjs-2';
 // import io from 'socket.io-client';
 
 class Doctor extends Component {
   constructor() {
     super();
     this.state = {
-      patients: []
+      patients: [],
+      data: {
+        labels: ['Female', 'Male'],
+        datasets: [
+          {
+            backgroundColor: ['#938f', '#332f'],
+            borderColor: '#000',
+            hoverBackgroundColor: ['rgba(255,99,132,0.4)', 'rgba(0,0,233,0.4)'],
+            data: [3, 2]
+          }
+        ]
+      }
       // messages: [],
       // message: ''
     };
@@ -19,7 +30,6 @@ class Doctor extends Component {
   componentDidMount() {
     this.getDoc();
     this.getPatients();
-    // this.chatListener();
   }
 
   getPatients = async () => {
@@ -40,16 +50,7 @@ class Doctor extends Component {
         this.props.history.push("/");
       }
     }
-  };
-
-  // chatListener = async () => {
-  //   this.socket=io();
-  // }
-
-  // chatRoom(doctor, patient) {
-  //   this.socket.emit('endChat', this.state.c)
-  // } 
-
+  }; 
 
 
   render() {
@@ -68,8 +69,8 @@ class Doctor extends Component {
       <div>
         <h1>Hello, Dr. {dLastName}</h1>
         <h3>Here are your patients.</h3>
-        {mappedPatients}
-
+        <div className='patients'>{mappedPatients} </div>
+        <div className='pie'> <Pie data={this.state.data}/></div>
       </div>
     );
   }

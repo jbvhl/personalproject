@@ -1,9 +1,14 @@
 .landing {
+
   .title {
     font-style: italic;
     font-size: 45px;
   }
   .info {
+    .articles {
+      overflow: scroll;
+      height: 41.5vh
+    }
     .article {
       background-color: rgb(182, 182, 182);
       padding-left: 15%;
@@ -25,7 +30,8 @@
     }
   
     .illnesses{
-        padding: 5%;
+      overflow: scroll;
+      height: 43.9vh;
         border: solid;
         background-color: gray;
     }
