@@ -8,8 +8,8 @@ class Landing extends Component {
 
     this.state = {
       articles: [],
-      illnesses: [],
-      search: ''
+      illnesses: []
+      // search: ''
     };
 
   }
@@ -39,11 +39,22 @@ class Landing extends Component {
         `https://mobilesvc.sickweather.com/ws/v2.0/illnesses/getIllnesses.php?api_key=fnw86kvhyt4yfgj4hmjxtqbk5anczmne`
       )
       .then(res => {
+        // console.log('illnesses', res.data)
         this.setState({
           illnesses: res.data
         });
       });
   };
+
+  // search() {
+  //   axios.get(`https://mobilesvc.sickweather.com/ws/v2.0/illnesses/getIllnesses.php?api_key=fnw86kvhyt4yfgj4hmjxtqbk5anczmne`).then(res => {
+  //     if (res.data.name == this.state.search) {
+  //       this.setState({
+  //         illnesses: res.data
+  //       });
+  //     }
+  //   })
+  // }
 
   handleChange = (prop, val) => {
     this.setState({
@@ -85,8 +96,10 @@ class Landing extends Component {
     return (
       <div>
         <h1 className="title">Diagnosed</h1>
-        <input placeholder='Search'/>
-        <button>Search</button>
+        {/* <input placeholder='Search'
+        value={this.state.search}
+        onChange={e => this.handleChange('search', e.target.value)}/>
+        <button onClick={this.search}>Search</button> */}
       <div className='landing'>
         <div className='info'>
           <div className="articles">{articles}</div>

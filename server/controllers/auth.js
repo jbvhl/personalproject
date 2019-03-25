@@ -12,10 +12,9 @@ module.exports = {
 
   getPatients: async (req, res) => {
     const db = req.app.get("db"),
-    {dId} = req.body;
-    console.log('bodddy', req.body)
-    let resp = await db.auth.getPatients({doctor_id: dId})
-    console.log('meeep', resp)
+    {id} = req.session.doctor;
+    let resp = await db.auth.getPatients({doctor_id: id})
+    // console.log('meeep', resp)
     res.status(200).send(resp);
     },
 

@@ -3,25 +3,31 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { updateDoctor, updatePatient } from "../../ducks/authReducer";
 import "./doctor.scss";
+import {Pie} from 'chart.js'
+// import io from 'socket.io-client';
 
 class Doctor extends Component {
   constructor() {
     super();
     this.state = {
       patients: []
+      // messages: [],
+      // message: ''
     };
   }
 
   componentDidMount() {
     this.getDoc();
     this.getPatients();
+    // this.chatListener();
   }
 
   getPatients = async () => {
-    const {dId} = this.props;
-    console.log('asdf', dId)
-    let res = await axios.get(`/api/patients`, {dId});
-    console.log('patients', res.data)
+    let res = await axios.get(`/api/patients`);
+    // console.log(res.data)
+    this.setState({
+      patients: res.data
+    });
   }
 
   getDoc = async () => {
@@ -36,12 +42,21 @@ class Doctor extends Component {
     }
   };
 
+  // chatListener = async () => {
+  //   this.socket=io();
+  // }
+
+  // chatRoom(doctor, patient) {
+  //   this.socket.emit('endChat', this.state.c)
+  // } 
+
+
+
   render() {
-    console.log(this.props)
     const mappedPatients = this.state.patients.map(patient => {
       return (
         <div className='patient'>
-        <h4>Name:</h4> {patient.firstName} {patient.lastName}
+        <h4>Name:</h4> {patient.first_name} {patient.last_name}
         <h4>Age:</h4> {patient.age}
         <h4>Gender:</h4> {patient.gender}
         </div>
@@ -54,6 +69,7 @@ class Doctor extends Component {
         <h1>Hello, Dr. {dLastName}</h1>
         <h3>Here are your patients.</h3>
         {mappedPatients}
+
       </div>
     );
   }

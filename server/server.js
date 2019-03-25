@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require('express'),
     session = require('express-session'),
-    massive = require('massive'); 
+    massive = require('massive');
+    // socket = require('socket.io'); 
 
 //controllers
 const authCtrl = require('./controllers/auth');
@@ -22,9 +23,15 @@ app.use(session({
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);
-
     app.listen(SERVER_PORT, () => console.log(`${SERVER_PORT} pandas are eating you alive.`))
 });
+// const io = socket(app.listen(SERVER_PORT, () => console.log(`${SERVER_PORT} pandas are eating you alive.`)))
+
+//Sockets
+// io.on('connection', (socket) => {
+// console.log('pandas');
+
+// })
 
 //endpoints
 app.get(`/api/patient`, authCtrl.getPatient);

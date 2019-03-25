@@ -1,13 +1,9 @@
 .landing {
-  display: flex;
-  box-flex: center;
   .title {
     font-style: italic;
     font-size: 45px;
   }
   .info {
-    width: 75%;
-    box-flex: center;
     .article {
       background-color: rgb(182, 182, 182);
       padding-left: 15%;
@@ -30,9 +26,8 @@
   
     .illnesses{
         padding: 5%;
-        border: 
-        s
-    o lid;
+        border: solid;
+        background-color: gray;
     }
   }
 }
